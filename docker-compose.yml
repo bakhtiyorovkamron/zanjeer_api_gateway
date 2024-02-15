@@ -5,4 +5,14 @@ services:
     build: .
     ports:
       - "9999:7777"
-  
+    depends_on:
+      - mypostgres
+  mypostgres:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=${POSTGRES_DB}

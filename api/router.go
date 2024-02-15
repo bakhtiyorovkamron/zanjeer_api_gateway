@@ -16,6 +16,7 @@ func New() *gin.Engine {
 			"message": "pong",
 		})
 	})
+	r.POST("/login", HealthCheck)
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("swagger/doc.json")))
 	return r
 }

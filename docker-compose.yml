@@ -4,5 +4,5 @@ services:
   app:
     build: .
     ports:
-      - "3000:7777"
+      - "9999:7777"
   

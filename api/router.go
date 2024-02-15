@@ -4,16 +4,21 @@ import (
 	"net/http"
 
 	_ "github.com/Projects/zanjeer_api_gateway/api/docs"
+	"github.com/Projects/zanjeer_api_gateway/config"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-func New() *gin.Engine {
+func New(cfg config.Config) *gin.Engine {
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"message": "pong",
+			"message":  "pong",
+			"host":     cfg.PostgresHost,
+			"port":     cfg.PostgresPort,
+			"username": cfg.PostgresUser,
+			"password": cfg.PostgresPassword,
 		})
 	})
 	r.POST("/login", HealthCheck)

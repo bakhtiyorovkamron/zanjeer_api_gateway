@@ -53,7 +53,7 @@ func Load() Config {
 	c.BaseUrl = cast.ToString(getOrReturnDefault("BASE_URL", "http://localhost:8000/v1/"))
 
 	// Postgres
-	c.PostgresHost = cast.ToString(getOrReturnDefault("POSTGRES_HOST", "castor.db.elephantsql.com"))
+	c.PostgresHost = cast.ToString(getOrReturnDefault("POSTGRES_HOST", "mypostgres"))
 	c.PostgresPort = cast.ToString(getOrReturnDefault("POSTGRES_PORT", 5432))
 	c.PostgresDatabase = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "postgres"))
 	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "postgres"))

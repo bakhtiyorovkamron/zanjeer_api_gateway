@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/Masterminds/squirrel"
-	"github.com/golanguzb70/simple-post-app/config"
+	"github.com/Projects/zanjeer_api_gateway/config"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )

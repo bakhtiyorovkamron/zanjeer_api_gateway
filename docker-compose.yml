@@ -19,6 +19,18 @@ services:
       - POSTGRES_DATABASE=postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  migrate:
+    container_name: migrate
+    image: migrate/migrate:v4.15.2
+    volumes:
+      - ./migrations:/migrations
+    entrypoint: migrate -path ./migrations -database "postgres://postgres:postgres@mypostgres:5432/postgres?sslmode=disable"
+    command: up
+    restart: on-failure
+    depends_on:
+      - mypostgres
+
+
 volumes:
   postgres_data: 
 

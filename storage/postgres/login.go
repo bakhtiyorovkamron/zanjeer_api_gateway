@@ -8,7 +8,7 @@ func (p *postgresRepo) Login(login, password string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	data.Scan(&res)
+	err = data.Scan(&res)
 
-	return res, nil
+	return res, err
 }

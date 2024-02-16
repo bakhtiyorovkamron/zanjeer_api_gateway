@@ -10,6 +10,8 @@ services:
   mypostgres:
     image: postgres
     restart: always
+    ports:
+      - "5432:5432"
     environment:
       - POSTGRES_PORT=5432
       - POSTGRES_USER=postgres

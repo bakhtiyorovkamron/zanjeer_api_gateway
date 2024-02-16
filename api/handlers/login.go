@@ -25,7 +25,7 @@ func (h *handlerV1) Login(c *gin.Context) {
 
 	response, err := h.storage.Postgres().Login(resp.Login, resp.Password)
 	if err != nil {
-		c.JSON(400, gin.H{"error": "Invalid request"})
+		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
 

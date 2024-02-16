@@ -7,6 +7,7 @@ import (
 	"github.com/Projects/zanjeer_api_gateway/config"
 	"github.com/Projects/zanjeer_api_gateway/pkg/db"
 	"github.com/Projects/zanjeer_api_gateway/pkg/logger"
+	"github.com/Projects/zanjeer_api_gateway/storage"
 )
 
 func main() {
@@ -22,6 +23,6 @@ func main() {
 	}
 	fmt.Println("Database :", db)
 
-	r := api.New(cfg)
+	r := api.New(cfg, storage.New(db, logger, cfg), logger)
 	r.Run(":7777")
 }

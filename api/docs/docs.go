@@ -19,7 +19,7 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "JWT": []
+                        "BearerAuth": []
                     }
                 ],
                 "description": "Here admins can be created.",

@@ -50,7 +50,7 @@ paths:
           schema:
             $ref: '#/definitions/models.StandardResponse'
       security:
-      - JWT: []
+      - BearerAuth: []
       summary: Add admin by superadmin
       tags:
       - Admin

@@ -2,7 +2,7 @@ CREATE OR REPLACE FUNCTION check_admin_existence()
 RETURNS TRIGGER AS 
 $$
 BEGIN
-    IF EXISTS (SELECT * FROM "admins" WHERE login = NEW.login and password=NEW.password) THEN
+    IF EXISTS (SELECT * FROM "admins" WHERE login = NEW.login ) THEN
         RAISE EXCEPTION 'Admin with login % does already exists', NEW.login;
     END IF;
     RETURN NEW;

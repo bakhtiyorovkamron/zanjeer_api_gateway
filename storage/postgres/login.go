@@ -32,9 +32,6 @@ func (p *postgresRepo) Login(req models.Login) (string, error) {
 		return "", errors.New("Invalid login")
 	}
 
-	fmt.Println("Password :", password)
-	fmt.Println("Req Password:", req.Password)
-
 	err = validator.VerifyPassword(req.Password, password)
 	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
 		return "", errors.New("Invalid login or password mismatch")

@@ -50,17 +50,17 @@ func (h *handlerV1) CreateAdmin(c *gin.Context) {
 	})
 }
 
-// @Router: /admin/get/admins [GET]
-// @Summary: Get all admins
-// @Tags: Admin
-// @Description: Here all admins can be fetched.
-// @Accept: json
-// @Produce: json
-// @Security: BearerAuth
+// @Router /superadmin/get/admins [GET]
+// @Summary Get all admins
+// @Tags Admin
+// @Description Here all admins can be fetched.
+// @Accept json
+// @Produce json
+// @Security BearerAuth
 // @Param limit query string true "limit"
 // @Param offset query string true "offset"
-// @Success: 200 {object} models.Admin
-// @Failure: default {object} models.StandardResponse
+// @Success 200 {object} []models.Admin
+// @Failure default {object} models.StandardResponse
 func (h *handlerV1) GetAdmins(c *gin.Context) {
 
 	limit, ok := c.GetQuery("limit")

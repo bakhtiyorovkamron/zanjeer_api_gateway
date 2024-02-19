@@ -59,7 +59,7 @@ func Load() Config {
 	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "postgres"))
 	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "postgres"))
 	c.PostgresConnectionTimeOut = cast.ToInt(getOrReturnDefault("POSTGRES_CONNECTION_TIMEOUT", 5))
-	c.PostgresConnectionTry = cast.ToInt(getOrReturnDefault("POSTGRES_CONNECTION_TRY", 10))
+	c.PostgresConnectionTry = cast.ToInt(getOrReturnDefault("POSTGRES_CONNECTION_TRY", 1))
 
 	c.SignInKey = cast.ToString(getOrReturnDefault("SIGN_IN_KEY", "ASJDKLFJASasdFASE2SD2dafa"))
 	c.AuthConfigPath = cast.ToString(getOrReturnDefault("AUTH_CONFIG_PATH", "./config/auth.conf"))

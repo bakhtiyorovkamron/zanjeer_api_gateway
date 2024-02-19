@@ -63,6 +63,11 @@ func (h *handlerV1) CreateAdmin(c *gin.Context) {
 // @Failure default {object} models.StandardResponse
 func (h *handlerV1) GetAdmins(c *gin.Context) {
 
+	id, ok := c.GetQuery("id")
+	if !ok {
+		id = ""
+	}
+
 	limit, ok := c.GetQuery("limit")
 	if !ok {
 		limit = "10"
@@ -88,6 +93,7 @@ func (h *handlerV1) GetAdmins(c *gin.Context) {
 	data, err := h.storage.Postgres().GetAdmins(models.GetAdmins{
 		Limit: limitInt,
 		Page:  pageInt,
+		Id:    id,
 	})
 	if err != nil {
 		c.JSON(400, gin.H{

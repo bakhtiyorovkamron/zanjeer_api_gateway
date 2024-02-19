@@ -70,7 +70,7 @@ func (h *handlerV1) GetAdmins(c *gin.Context) {
 
 	page, ok := c.GetQuery("page")
 	if !ok {
-		page = "1"
+		page = "0"
 	}
 	limitInt, err := strconv.Atoi(limit)
 	if err != nil {

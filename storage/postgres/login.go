@@ -42,6 +42,7 @@ func (p *postgresRepo) Login(req models.Login) (models.LoginResponse, error) {
 	if err != nil {
 		return resp, err
 	}
+	resp.Admin.Login = res
 	resp.Token = token
 	return resp, nil
 

@@ -7,11 +7,11 @@ import (
 
 // @Router		/superadmin/add/admin [POST]
 // @Summary		Add admin by superadmin
-// @Tags        admin tags
+// @Tags        Admin
 // @Description	Here admins can be created.
-// @Security    BearerAuth
 // @Accept      json
 // @Produce		json
+// @Security    JWT
 // @Param       post   body       models.Admin true "admin"
 // @Success		200 	{object}  models.Admin
 // @Failure     default {object}  models.StandardResponse

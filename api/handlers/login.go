@@ -9,11 +9,12 @@ import (
 
 // @Router		/superadmin/login [POST]
 // @Summary		Login user
-// @Tags        User
+// @Tags        Admin
 // @Description	Here user can be logged.
 // @Security    BearerAuth
 // @Accept      json
 // @Produce		json
+// @Path
 // @Param       post   body       models.Login true "login users"
 // @Success		200 	{object}  models.Login
 // @Failure     default {object}  models.StandardResponse

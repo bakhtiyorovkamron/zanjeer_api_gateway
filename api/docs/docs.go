@@ -19,7 +19,7 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "JWT": []
                     }
                 ],
                 "description": "Here admins can be created.",
@@ -30,7 +30,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "admin tags"
+                    "Admin"
                 ],
                 "summary": "Add admin by superadmin",
                 "parameters": [
@@ -75,7 +75,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "Admin"
                 ],
                 "summary": "Login user",
                 "parameters": [

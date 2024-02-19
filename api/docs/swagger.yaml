@@ -50,10 +50,10 @@ paths:
           schema:
             $ref: '#/definitions/models.StandardResponse'
       security:
-      - BearerAuth: []
+      - JWT: []
       summary: Add admin by superadmin
       tags:
-      - admin tags
+      - Admin
   /superadmin/login:
     post:
       consumes:
@@ -81,5 +81,5 @@ paths:
       - BearerAuth: []
       summary: Login user
       tags:
-      - User
+      - Admin
 swagger: "2.0"

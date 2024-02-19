@@ -1,0 +1,1 @@
+DROP FUNCTION check_admin_existence();

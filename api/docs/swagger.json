@@ -8,7 +8,7 @@
             "post": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "JWT": []
                     }
                 ],
                 "description": "Here admins can be created.",
@@ -19,7 +19,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "admin tags"
+                    "Admin"
                 ],
                 "summary": "Add admin by superadmin",
                 "parameters": [
@@ -64,7 +64,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "Admin"
                 ],
                 "summary": "Login user",
                 "parameters": [

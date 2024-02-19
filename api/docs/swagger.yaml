@@ -1,6 +1,10 @@
 definitions:
   models.Admin:
     properties:
+      created_at:
+        type: string
+      id:
+        type: string
       login:
         type: string
       password:

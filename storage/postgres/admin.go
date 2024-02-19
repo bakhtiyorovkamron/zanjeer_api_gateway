@@ -33,3 +33,19 @@ func (p *postgresRepo) CreateAdmin(req models.Admin) (models.Admin, error) {
 
 	return admin, nil
 }
+func (p *postgresRepo) GetAdmins(req models.GetAdmins) ([]models.Admin, error) {
+	var admins []models.Admin
+	var admin models.Admin
+	rows, err := p.Db.Db.Query("select id,login,created_at from admins limit $1 offset $2", req.Limit, req.Page)
+	if err != nil {
+		return admins, err
+	}
+	for rows.Next() {
+		err = rows.Scan(&admin.Id, &admin.Login, &admin.CreatedAt)
+		if err != nil {
+			return admins, err
+		}
+		admins = append(admins, admin)
+	}
+	return admins, nil
+}

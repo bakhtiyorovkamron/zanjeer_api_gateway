@@ -38,6 +38,7 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 	superadmin.POST("/login", h.Login)
 	superadmin.Use(h.JwtAuthMiddleware())
 	superadmin.POST("/add/admin", h.CreateAdmin)
+	superadmin.GET("/get/admins", h.GetAdmins)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("swagger/doc.json")))
 	return r

@@ -110,6 +110,12 @@ const docTemplate = `{
         "models.Admin": {
             "type": "object",
             "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
                 "login": {
                     "type": "string"
                 },

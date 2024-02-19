@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/Projects/zanjeer_api_gateway/models"
+	"github.com/Projects/zanjeer_api_gateway/pkg/validator"
 )
 
 func (p *postgresRepo) Login(req models.Login) (string, error) {
@@ -26,6 +27,10 @@ func (p *postgresRepo) Login(req models.Login) (string, error) {
 	if res == "" {
 		return "", errors.New("Invalid login")
 	}
+	token, err := validator.GenerateToken(req.Login, req.Type)
+	if err != nil {
+		return "", err
+	}
+	return token, nil
 
-	return res, err
 }

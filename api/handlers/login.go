@@ -32,10 +32,9 @@ func (h *handlerV1) Login(c *gin.Context) {
 	}
 
 	fmt.Println("Response from login", response)
-	
 
 	c.JSON(200, gin.H{
 		"message": "Login successful",
-		"data":    response,
+		"token":   response,
 	})
 }

@@ -1,1 +1,1 @@
-ALTER TABLE admins DROP COLUMN type;
+ALTER TABLE admins DROP COLUMN user_type;

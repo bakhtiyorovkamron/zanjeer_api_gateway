@@ -3,6 +3,7 @@ package models
 type Login struct {
 	Login    string `json:"login"`
 	Password string `json:"password"`
+	Type     string `json:"type"`
 }
 type StandardResponse struct {
 	StatusId string `json:"status_id"`

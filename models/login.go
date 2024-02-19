@@ -10,3 +10,7 @@ type StandardResponse struct {
 	Message  string `json:"message"`
 	Data     any    `json:"data"`
 }
+type LoginResponse struct {
+	Token string `json:"token"`
+	Admin Admin  `json:"admin"`
+}

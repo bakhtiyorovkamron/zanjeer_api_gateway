@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/add/admin": {
+        "/superadmin/add/admin": {
             "post": {
                 "security": [
                     {

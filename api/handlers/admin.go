@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Router		/add/admin [POST]
+// @Router		/superadmin/add/admin [POST]
 // @Summary		Add admin by superadmin
 // @Tags        admin tags
 // @Description	Here admins can be created.

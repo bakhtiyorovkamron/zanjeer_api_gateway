@@ -3,6 +3,7 @@ package handlers
 import (
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // @Router		/superadmin/add/admin [POST]
@@ -22,17 +23,27 @@ func (h *handlerV1) CreateAdmin(c *gin.Context) {
 		c.JSON(400, gin.H{"error": "Invalid request"})
 		return
 	}
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(resp.Password), bcrypt.DefaultCost)
+	if err != nil {
+		c.JSON(500, gin.H{
+			"message": "server error"})
+		return
+	}
+	resp.Password = string(hashedPassword)
 
-	err := h.storage.Postgres().CreateAdmin(resp)
+	data, err := h.storage.Postgres().CreateAdmin(resp)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"status": "error",
-			"error":  err.Error()},
+			"status":  "error",
+			"message": err.Error(),
+			"data":    nil,
+		},
 		)
 		return
 	}
 	c.JSON(200, gin.H{
 		"status":  "OK",
 		"message": "Admin created successfully",
+		"data":    data,
 	})
 }

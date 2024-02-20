@@ -8,7 +8,7 @@ services:
     depends_on:
       - mypostgres
   mypostgres:
-    image: postgres
+    image: postgres:13
     restart: always
     ports:
       - "5432:5432"

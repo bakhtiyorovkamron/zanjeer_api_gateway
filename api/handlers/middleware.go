@@ -22,12 +22,12 @@ func (h *handlerV1) SuperAdminCheckType() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		userType := validator.GetUserTypeFromToken(c)
 		if userType == "" {
-			c.String(http.StatusUnauthorized, "user type is empty")
+			c.String(http.StatusForbidden, "user type is empty")
 			c.Abort()
 			return
 		}
 		if userType != "superadmin" {
-			c.String(http.StatusUnauthorized, "user is not superadmin")
+			c.String(http.StatusForbidden, "user is not superadmin")
 			c.Abort()
 			return
 		}

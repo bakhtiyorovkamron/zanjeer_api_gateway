@@ -8,7 +8,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// @Router		/superadmin/add/admin [POST]
+// @Router		/admin/add/admin [POST]
 // @Summary		Add admin by superadmin
 // @Tags        Admin
 // @Description	Here admins can be created.
@@ -50,7 +50,7 @@ func (h *handlerV1) CreateAdmin(c *gin.Context) {
 	})
 }
 
-// @Router /superadmin/get/admins [GET]
+// @Router /admin/get/admins [GET]
 // @Summary Get all admins
 // @Tags Admin
 // @Description Here all admins can be fetched.

@@ -4,7 +4,7 @@
         "contact": {}
     },
     "paths": {
-        "/superadmin/add/admin": {
+        "/admin/add/admin": {
             "post": {
                 "security": [
                     {
@@ -49,7 +49,7 @@
                 }
             }
         },
-        "/superadmin/get/admins": {
+        "/admin/get/admins": {
             "get": {
                 "security": [
                     {
@@ -102,7 +102,7 @@
                 }
             }
         },
-        "/superadmin/login": {
+        "/admin/login": {
             "post": {
                 "security": [
                     {
@@ -162,6 +162,9 @@
                     "type": "string"
                 },
                 "password": {
+                    "type": "string"
+                },
+                "type": {
                     "type": "string"
                 }
             }

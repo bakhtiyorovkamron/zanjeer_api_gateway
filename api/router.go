@@ -34,11 +34,11 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 			"message": "pong",
 		})
 	})
-	superadmin := r.Group("/superadmin")
-	superadmin.POST("/login", h.Login)
-	// superadmin.Use(h.JwtAuthMiddleware())
-	superadmin.POST("/add/admin", h.CreateAdmin)
-	superadmin.GET("/get/admins", h.GetAdmins)
+	admin := r.Group("/admin")
+	admin.POST("/login", h.Login)
+	admin.Use(h.JwtAuthMiddleware())
+	admin.POST("/add/admin", h.CreateAdmin)
+	admin.GET("/get/admins", h.GetAdmins)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("swagger/doc.json")))
 	return r

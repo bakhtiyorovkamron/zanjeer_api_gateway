@@ -17,7 +17,7 @@ func (p *postgresRepo) Login(req models.Login) (models.LoginResponse, error) {
 		resp models.LoginResponse
 	)
 
-	data, err := p.Db.Db.Query("select login,password,id,type,created_at from admins where login = $1 ", req.Login)
+	data, err := p.Db.Db.Query("select login,password,id,type,created_at from admins where login = $1 and type=$2 ", req.Login, req.Type)
 	if err != nil {
 		fmt.Println("Error while querying", err)
 		return resp, err

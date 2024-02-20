@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/superadmin/add/admin": {
+        "/admin/add/admin": {
             "post": {
                 "security": [
                     {
@@ -60,7 +60,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/superadmin/get/admins": {
+        "/admin/get/admins": {
             "get": {
                 "security": [
                     {
@@ -113,7 +113,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/superadmin/login": {
+        "/admin/login": {
             "post": {
                 "security": [
                     {
@@ -173,6 +173,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "password": {
+                    "type": "string"
+                },
+                "type": {
                     "type": "string"
                 }
             }

@@ -9,6 +9,8 @@ definitions:
         type: string
       password:
         type: string
+      type:
+        type: string
     type: object
   models.Login:
     properties:
@@ -30,7 +32,7 @@ definitions:
 info:
   contact: {}
 paths:
-  /superadmin/add/admin:
+  /admin/add/admin:
     post:
       consumes:
       - application/json
@@ -58,7 +60,7 @@ paths:
       summary: Add admin by superadmin
       tags:
       - Admin
-  /superadmin/get/admins:
+  /admin/get/admins:
     get:
       consumes:
       - application/json
@@ -92,7 +94,7 @@ paths:
       summary: Get all admins
       tags:
       - Admin
-  /superadmin/login:
+  /admin/login:
     post:
       consumes:
       - application/json

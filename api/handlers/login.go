@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Router		/superadmin/login [POST]
+// @Router		/admin/login [POST]
 // @Summary		Login user
 // @Tags        Admin
 // @Description	Here user can be logged.

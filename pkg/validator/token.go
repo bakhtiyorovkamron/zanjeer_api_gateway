@@ -67,7 +67,6 @@ func GetUserTypeFromToken(c *gin.Context) string {
 	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		return []byte(os.Getenv("API_SECRET")), nil
 	})
-	// claims , _ := cast.ToStringMapString(token.Claims)
 	claims, _ := token.Claims.(jwt.MapClaims)
 
 	return cast.ToString(claims["user_type"])

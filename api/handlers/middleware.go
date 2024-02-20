@@ -18,3 +18,19 @@ func (h *handlerV1) JwtAuthMiddleware() gin.HandlerFunc {
 		c.Next()
 	}
 }
+func (h *handlerV1) SuperAdminCheckType() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		userType := validator.GetUserTypeFromToken(c)
+		if userType == "" {
+			c.String(http.StatusUnauthorized, "user type is empty")
+			c.Abort()
+			return
+		}
+		if userType != "superadmin" {
+			c.String(http.StatusUnauthorized, "user is not superadmin")
+			c.Abort()
+			return
+		}
+		c.Next()
+	}
+}

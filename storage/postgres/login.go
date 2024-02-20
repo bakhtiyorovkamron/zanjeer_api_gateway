@@ -17,7 +17,7 @@ func (p *postgresRepo) Login(req models.Login) (models.LoginResponse, error) {
 		resp models.LoginResponse
 	)
 
-	data, err := p.Db.Db.Query("select login,password,id,type,created_at from admins where login = $1 and type=$2 ", req.Login, req.Type)
+	data, err := p.Db.Db.Query("select login,password,id,type,created_at from admins where login = $1", req.Login)
 	if err != nil {
 		fmt.Println("Error while querying", err)
 		return resp, err
@@ -37,8 +37,8 @@ func (p *postgresRepo) Login(req models.Login) (models.LoginResponse, error) {
 	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
 		return resp, errors.New("Invalid login or password mismatch")
 	}
-
-	token, err := validator.GenerateToken(req.Login, req.Type)
+	fmt.Println("Admin type", resp.Admin.Type)
+	token, err := validator.GenerateToken(req.Login, resp.Admin.Type)
 	if err != nil {
 		return resp, err
 	}

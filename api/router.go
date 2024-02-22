@@ -37,8 +37,8 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 	admin := r.Group("/admin")
 	admin.POST("/login", h.Login)
 	admin.GET("/get/admins", h.GetAdmins)
-	admin.Use(h.JwtAuthMiddleware())
-	admin.Use(h.SuperAdminCheckType())
+	// admin.Use(h.JwtAuthMiddleware())
+	// admin.Use(h.SuperAdminCheckType())
 	admin.POST("/add/admin", h.CreateAdmin)
 
 	user := r.Group("/user")

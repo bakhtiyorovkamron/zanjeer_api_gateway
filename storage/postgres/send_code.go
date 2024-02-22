@@ -22,6 +22,6 @@ func (p *postgresRepo) CreateOTP(req models.SmsOtp) (models.Sms, error) {
 	}
 	return res, nil
 }
-func (p *postgresRepo) ConfirmOTP(req models.Sms) error {
-	return p.Db.Db.QueryRow("update sms set confirm = true,code=$2 where id=$1 returning phone", req.SmsId, req.Code).Err()
+func (p *postgresRepo) ConfirmOTP(req models.ConfirmOTP) error {
+	return p.Db.Db.QueryRow("update sms set confirm = true,code=$2 where id=$1 returning phone", req.SmsId, req.Code).Scan(req.Phone)
 }

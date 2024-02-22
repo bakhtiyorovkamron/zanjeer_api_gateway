@@ -97,10 +97,13 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 	// 	})
 	// 	return
 	// }
-	err := h.storage.Postgres().ConfirmOTP(models.Sms{
+	otp := models.ConfirmOTP{
 		SmsId: req.SmsId,
 		Code:  req.Code,
-	})
+	}
+	phone := "string"
+	otp.Phone = &phone
+	err := h.storage.Postgres().ConfirmOTP(otp)
 	if err != nil {
 		c.JSON(500, models.StandardResponse{
 			Status:  "error",
@@ -108,10 +111,20 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 		})
 		return
 	}
+	fmt.Println("Phone>>>>>>>>>>>>>>>>>>", *otp.Phone)
 
-	c.JSON(200, models.StandardResponse{
-		Status:  "success",
-		Message: "User registered successfully",
-		Data:    req,
+	resp, err := h.storage.Postgres().CreateDriver(models.Driver{
+		Phone: *otp.Phone,
+	})
+	if err != nil {
+		c.JSON(500, models.StandardResponse{
+			Status:  "error",
+			Message: "Error while creating driver",
+		})
+		return
+	}
+	c.JSON(200, gin.H{
+		"message": "User verified successfully",
+		"data":    resp,
 	})
 }

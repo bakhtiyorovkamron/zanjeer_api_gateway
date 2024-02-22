@@ -7,5 +7,6 @@ type PostgresI interface {
 	CreateAdmin(req models.Admin) (models.Admin, error)
 	GetAdmins(req models.GetAdmins) ([]models.Admin, error)
 	CreateOTP(req models.SmsOtp) (models.Sms, error)
-	ConfirmOTP(req models.Sms) error
+	ConfirmOTP(req models.ConfirmOTP) error
+	CreateDriver(req models.Driver) (models.Driver, error)
 }

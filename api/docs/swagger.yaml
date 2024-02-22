@@ -21,19 +21,22 @@ definitions:
       type:
         type: string
     type: object
+  models.Sms:
+    properties:
+      phone:
+        type: string
+    type: object
   models.StandardResponse:
     properties:
       data: {}
       message:
         type: string
-      status_id:
+      status:
         type: string
     type: object
-  models.UserRegister:
+  models.VerifyNumber:
     properties:
-      first_name:
-        type: string
-      last_name:
+      code:
         type: string
       phone:
         type: string
@@ -142,14 +145,14 @@ paths:
         name: post
         required: true
         schema:
-          $ref: '#/definitions/models.UserRegister'
+          $ref: '#/definitions/models.Sms'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.UserRegister'
+            $ref: '#/definitions/models.Sms'
         default:
           description: ""
           schema:
@@ -157,6 +160,34 @@ paths:
       security:
       - BearerAuth: []
       summary: user sending number
+      tags:
+      - User
+  /user/verify-number:
+    post:
+      consumes:
+      - application/json
+      description: Here users can be registered.
+      parameters:
+      - description: admin
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/models.VerifyNumber'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.VerifyNumber'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: user verifying number
       tags:
       - User
 swagger: "2.0"

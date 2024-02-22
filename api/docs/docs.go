@@ -183,7 +183,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.UserRegister"
+                            "$ref": "#/definitions/models.Sms"
                         }
                     }
                 ],
@@ -191,7 +191,52 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.UserRegister"
+                            "$ref": "#/definitions/models.Sms"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/verify-number": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Here users can be registered.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "user verifying number",
+                "parameters": [
+                    {
+                        "description": "admin",
+                        "name": "post",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.VerifyNumber"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.VerifyNumber"
                         }
                     },
                     "default": {
@@ -239,6 +284,14 @@ const docTemplate = `{
                 }
             }
         },
+        "models.Sms": {
+            "type": "object",
+            "properties": {
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
         "models.StandardResponse": {
             "type": "object",
             "properties": {
@@ -246,18 +299,15 @@ const docTemplate = `{
                 "message": {
                     "type": "string"
                 },
-                "status_id": {
+                "status": {
                     "type": "string"
                 }
             }
         },
-        "models.UserRegister": {
+        "models.VerifyNumber": {
             "type": "object",
             "properties": {
-                "first_name": {
-                    "type": "string"
-                },
-                "last_name": {
+                "code": {
                     "type": "string"
                 },
                 "phone": {

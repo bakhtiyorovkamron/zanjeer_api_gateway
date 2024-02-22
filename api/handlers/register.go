@@ -1,7 +1,10 @@
 package handlers
 
 import (
+	"fmt"
+
 	"github.com/Projects/zanjeer_api_gateway/models"
+	"github.com/Projects/zanjeer_api_gateway/pkg/util"
 	"github.com/Projects/zanjeer_api_gateway/pkg/validator"
 	"github.com/gin-gonic/gin"
 )
@@ -35,10 +38,22 @@ func (h *handlerV1) SendNumber(c *gin.Context) {
 		return
 	}
 
+	code, err := util.GenerateCode(4)
+	if err != nil {
+		return
+	}
+
+	fmt.Println("Code", code)
+	// send code to user
+	otp, err := h.storage.Postgres().CreateOTP(models.SmsOtp{
+		Phone: req.Phone,
+		Code:  code,
+	})
+
 	c.JSON(200, models.StandardResponse{
 		Status:  "success",
 		Message: "User registered successfully",
-		Data:    req,
+		Data:    otp,
 	})
 }
 

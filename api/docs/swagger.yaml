@@ -23,7 +23,11 @@ definitions:
     type: object
   models.Sms:
     properties:
+      code:
+        type: string
       phone:
+        type: string
+      sms_id:
         type: string
     type: object
   models.StandardResponse:
@@ -32,13 +36,6 @@ definitions:
       message:
         type: string
       status:
-        type: string
-    type: object
-  models.VerifyNumber:
-    properties:
-      code:
-        type: string
-      phone:
         type: string
     type: object
 info:
@@ -173,14 +170,14 @@ paths:
         name: post
         required: true
         schema:
-          $ref: '#/definitions/models.VerifyNumber'
+          $ref: '#/definitions/models.Sms'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.VerifyNumber'
+            $ref: '#/definitions/models.Sms'
         default:
           description: ""
           schema:

@@ -228,7 +228,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.VerifyNumber"
+                            "$ref": "#/definitions/models.Sms"
                         }
                     }
                 ],
@@ -236,7 +236,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.VerifyNumber"
+                            "$ref": "#/definitions/models.Sms"
                         }
                     },
                     "default": {
@@ -287,7 +287,13 @@ const docTemplate = `{
         "models.Sms": {
             "type": "object",
             "properties": {
+                "code": {
+                    "type": "string"
+                },
                 "phone": {
+                    "type": "string"
+                },
+                "sms_id": {
                     "type": "string"
                 }
             }
@@ -300,17 +306,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "status": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.VerifyNumber": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "string"
-                },
-                "phone": {
                     "type": "string"
                 }
             }

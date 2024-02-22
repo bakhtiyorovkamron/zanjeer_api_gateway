@@ -1,6 +1,7 @@
 package models
 
 type Sms struct {
+	Code  string `json:"code"`
 	Phone string `json:"phone"`
 	SmsId string `json:"sms_id"`
 }

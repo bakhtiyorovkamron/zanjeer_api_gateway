@@ -3,12 +3,16 @@ package util
 import (
 	"crypto/rand"
 	"io"
+	"strings"
 )
 
 var (
 	table = [...]byte{'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'}
 )
 
+func FormatPhone(phone string) string {
+	return strings.ReplaceAll(phone, "+", "")
+}
 
 func GenerateCode(max int) (string, error) {
 	b := make([]byte, max)

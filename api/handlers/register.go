@@ -40,15 +40,27 @@ func (h *handlerV1) SendNumber(c *gin.Context) {
 
 	code, err := util.GenerateCode(4)
 	if err != nil {
+		c.JSON(500, models.StandardResponse{
+			Status:  "error",
+			Message: "Error while generating code",
+		})
 		return
 	}
 
 	fmt.Println("Code", code)
+	req.Phone = util.FormatPhone(req.Phone)
 	// send code to user
 	otp, err := h.storage.Postgres().CreateOTP(models.SmsOtp{
 		Phone: req.Phone,
 		Code:  code,
 	})
+	if err != nil {
+		c.JSON(500, models.StandardResponse{
+			Status:  "error",
+			Message: "Error while sending code",
+		})
+		return
+	}
 
 	c.JSON(200, models.StandardResponse{
 		Status:  "success",
@@ -64,11 +76,11 @@ func (h *handlerV1) SendNumber(c *gin.Context) {
 // @Accept      json
 // @Produce		json
 // @Security    BearerAuth
-// @Param       post   body       models.VerifyNumber true "admin"
-// @Success		200 	{object}  models.VerifyNumber
+// @Param       post   body       models.Sms true "admin"
+// @Success		200 	{object}  models.Sms
 // @Failure     default {object}  models.StandardResponse
 func (h *handlerV1) VerifyNumber(c *gin.Context) {
-	var req models.VerifyNumber
+	var req models.Sms
 	if err := c.ShouldBindJSON(&req); err != nil {
 		h.log.Error("Error while binding request", err)
 		c.JSON(400, models.StandardResponse{
@@ -78,10 +90,21 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 		return
 	}
 
-	if req.Code != "1234" {
-		c.JSON(400, models.StandardResponse{
+	// if req.Code != "1234" {
+	// 	c.JSON(400, models.StandardResponse{
+	// 		Status:  "error",
+	// 		Message: "Invalid code",
+	// 	})
+	// 	return
+	// }
+	err := h.storage.Postgres().ConfirmOTP(models.Sms{
+		SmsId: req.SmsId,
+		Code:  req.Code,
+	})
+	if err != nil {
+		c.JSON(500, models.StandardResponse{
 			Status:  "error",
-			Message: "Invalid code",
+			Message: err.Error(),
 		})
 		return
 	}

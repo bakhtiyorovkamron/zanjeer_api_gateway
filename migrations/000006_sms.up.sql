@@ -12,7 +12,9 @@ RETURNS TRIGGER AS
 $$ 
 BEGIN 
     IF NEW.confirm = TRUE AND now() - NEW.created_at > interval '1 minutes' THEN
-        RAISE EXCEPTION 'You can not change confirm status';
+        RAISE EXCEPTION 'Code is expired';
+    ELSEIF NEW.confirm = TRUE AND NEW.code != OLD.code THEN
+        RAISE EXCEPTION 'Code is incorrect';
     END IF;
     RETURN NEW;
 END;

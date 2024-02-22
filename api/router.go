@@ -42,7 +42,8 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 	admin.POST("/add/admin", h.CreateAdmin)
 
 	user := r.Group("/user")
-	user.POST("/register", h.UserRegister)
+	// user.POST("/register", h.UserRegister)
+	user.POST("/send-number", h.SendNumber)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("swagger/doc.json")))
 	return r

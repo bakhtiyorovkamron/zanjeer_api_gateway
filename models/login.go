@@ -6,7 +6,7 @@ type Login struct {
 	Type     string `json:"type"`
 }
 type StandardResponse struct {
-	Status  string `json:"status_id"`
+	Status  string `json:"status"`
 	Message string `json:"message"`
 	Data    any    `json:"data"`
 }

@@ -1,7 +1,9 @@
 package models
 
-type UserRegister struct {
-	Phone     string `json:"phone"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
+type Sms struct {
+	Phone string `json:"phone"`
+}
+type VerifyNumber struct {
+	Phone string `json:"phone"`
+	Code  string `json:"code"`
 }

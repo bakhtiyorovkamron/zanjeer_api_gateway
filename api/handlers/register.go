@@ -5,8 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Router		/user/register [POST]
-// @Summary		user register
+// @Router		/user/send-number [POST]
+// @Summary		user sending number
 // @Tags        User
 // @Description	Here users can be registered.
 // @Accept      json

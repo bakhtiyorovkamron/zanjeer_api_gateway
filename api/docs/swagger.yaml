@@ -31,6 +31,10 @@ definitions:
     type: object
   models.UserRegister:
     properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
       phone:
         type: string
     type: object
@@ -127,7 +131,7 @@ paths:
       summary: Login user
       tags:
       - Admin
-  /user/register:
+  /user/send-number:
     post:
       consumes:
       - application/json
@@ -152,7 +156,7 @@ paths:
             $ref: '#/definitions/models.StandardResponse'
       security:
       - BearerAuth: []
-      summary: user register
+      summary: user sending number
       tags:
       - User
 swagger: "2.0"

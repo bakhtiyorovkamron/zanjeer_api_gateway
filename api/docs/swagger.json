@@ -147,7 +147,7 @@
                 }
             }
         },
-        "/user/register": {
+        "/user/send-number": {
             "post": {
                 "security": [
                     {
@@ -164,7 +164,7 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "user register",
+                "summary": "user sending number",
                 "parameters": [
                     {
                         "description": "admin",
@@ -243,6 +243,12 @@
         "models.UserRegister": {
             "type": "object",
             "properties": {
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
                 "phone": {
                     "type": "string"
                 }

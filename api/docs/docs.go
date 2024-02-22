@@ -158,7 +158,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/register": {
+        "/user/send-number": {
             "post": {
                 "security": [
                     {
@@ -175,7 +175,7 @@ const docTemplate = `{
                 "tags": [
                     "User"
                 ],
-                "summary": "user register",
+                "summary": "user sending number",
                 "parameters": [
                     {
                         "description": "admin",
@@ -254,6 +254,12 @@ const docTemplate = `{
         "models.UserRegister": {
             "type": "object",
             "properties": {
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                },
                 "phone": {
                     "type": "string"
                 }

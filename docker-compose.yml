@@ -5,32 +5,16 @@ services:
     build: .
     ports:
       - "9999:7777"
-    depends_on:
-      - mypostgres
-  mypostgres:
-    image: postgres
-    restart: always
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_PORT=5432
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DATABASE=postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
   migrate:
     container_name: migrate
     image: migrate/migrate:v4.15.2
     volumes:
       - ./migrations:/migrations
-    entrypoint: migrate -path ./migrations -database "postgres://postgres:postgres@mypostgres:5432/postgres?sslmode=disable"
+    entrypoint: migrate -path ./migrations -database "postgres://zanjeer:password@5.39.92.50:5432/zanjeer?sslmode=disable"
     command: up
     restart: on-failure
-    depends_on:
-      - mypostgres
 
 
-volumes:
-  postgres_data: 
+
+
 

@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"fmt"
-
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/gin-gonic/gin"
 )
@@ -31,8 +29,6 @@ func (h *handlerV1) Login(c *gin.Context) {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-
-	fmt.Println("Response from login", response)
 
 	c.JSON(200, gin.H{
 		"message": "Login successful",

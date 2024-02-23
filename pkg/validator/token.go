@@ -71,3 +71,12 @@ func GetUserTypeFromToken(c *gin.Context) string {
 
 	return cast.ToString(claims["user_type"])
 }
+func GetUserIdFromToken(c *gin.Context) (string, error) {
+	tokenString := ExtractToken(c)
+	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		return []byte(os.Getenv("API_SECRET")), nil
+	})
+
+	claims, _ := token.Claims.(jwt.MapClaims)
+	return cast.ToString(claims["user_id"]), nil
+}

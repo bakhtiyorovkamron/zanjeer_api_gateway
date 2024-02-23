@@ -38,7 +38,7 @@ func (p *postgresRepo) Login(req models.Login) (models.LoginResponse, error) {
 		return resp, errors.New("Invalid login or password mismatch")
 	}
 	fmt.Println("Admin type", resp.Admin.Type)
-	token, err := validator.GenerateToken(req.Login, resp.Admin.Type)
+	token, err := validator.GenerateToken(resp.Admin.Id, resp.Admin.Type)
 	if err != nil {
 		return resp, err
 	}

@@ -47,7 +47,6 @@ func (h *handlerV1) SendNumber(c *gin.Context) {
 		return
 	}
 
-	fmt.Println("Code", code)
 	req.Phone = util.FormatPhone(req.Phone)
 	// send code to user
 	otp, err := h.storage.Postgres().CreateOTP(models.SmsOtp{
@@ -111,7 +110,6 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 		})
 		return
 	}
-	fmt.Println("Phone>>>>>>>>>>>>>>>>>>", *otp.Phone)
 
 	resp, err := h.storage.Postgres().CreateDriver(models.Driver{
 		Phone: *otp.Phone,
@@ -125,7 +123,7 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 	}
 	token, err := validator.GenerateToken(resp.Id, "driver")
 	if err != nil {
-		
+
 	}
 	c.JSON(200, gin.H{
 		"message": "User verified successfully",

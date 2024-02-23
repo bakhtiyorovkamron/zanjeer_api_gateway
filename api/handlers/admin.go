@@ -1,9 +1,11 @@
 package handlers
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/Projects/zanjeer_api_gateway/models"
+	"github.com/Projects/zanjeer_api_gateway/pkg/validator"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -108,5 +110,43 @@ func (h *handlerV1) GetAdmins(c *gin.Context) {
 		"status":  "OK",
 		"message": "Admins fetched successfully",
 		"data":    data,
+	})
+}
+
+// @Router /admin/get/info [GET]
+// @Summary Get self information
+// @Tags Admin
+// @Description Here admin can be fetched.
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {object} models.Admin
+// @Failure default {object} models.StandardResponse
+func (h *handlerV1) GetInfo(c *gin.Context) {
+	id, err := validator.GetUserIdFromToken(c)
+	if err != nil {
+		c.JSON(404, gin.H{
+			"error": err,
+		})
+		return
+	}
+	data, err := h.storage.Postgres().GetAdmins(models.GetAdmins{
+		Id:    id,
+		Page:  0,
+		Limit: 1,
+	})
+	if err != nil {
+		c.JSON(400, gin.H{
+			"status":  "error",
+			"message": err.Error(),
+			"data":    nil,
+		},
+		)
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"status": "success",
+		"data":   data,
 	})
 }

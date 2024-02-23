@@ -37,12 +37,7 @@ func New(cfg config.Config, opts ...Option) (*Postgres, error) {
 	for _, opt := range opts {
 		opt(pg)
 	}
-	fmt.Println("cfg.PostgresUser", cfg.PostgresUser)
-	fmt.Println("cfg.PostgresPassword", cfg.PostgresPassword)
-	fmt.Println("cfg.PostgresHost", cfg.PostgresHost)
-	fmt.Println("cfg.PostgresPort", cfg.PostgresPort)
-	fmt.Println("cfg.PostgresDatabase", cfg.PostgresDatabase)
-	
+
 	pgxUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		cfg.PostgresUser,
 		cfg.PostgresPassword,

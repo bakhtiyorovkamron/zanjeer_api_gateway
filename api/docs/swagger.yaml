@@ -103,6 +103,27 @@ paths:
       summary: Get all admins
       tags:
       - Admin
+  /admin/get/info:
+    get:
+      consumes:
+      - application/json
+      description: Here admin can be fetched.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Admin'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get self information
+      tags:
+      - Admin
   /admin/login:
     post:
       consumes:

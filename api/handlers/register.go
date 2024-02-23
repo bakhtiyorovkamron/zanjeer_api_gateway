@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"fmt"
-
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/Projects/zanjeer_api_gateway/pkg/util"
 	"github.com/Projects/zanjeer_api_gateway/pkg/validator"

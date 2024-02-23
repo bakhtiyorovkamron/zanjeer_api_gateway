@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/Projects/zanjeer_api_gateway/models"

@@ -123,8 +123,12 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 		})
 		return
 	}
+	token, err := validator.GenerateToken(resp.Id, "driver")
+	if err != nil {
+		
+	}
 	c.JSON(200, gin.H{
 		"message": "User verified successfully",
-		"data":    resp,
+		"token":   token,
 	})
 }

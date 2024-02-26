@@ -12,6 +12,21 @@ definitions:
       type:
         type: string
     type: object
+  models.Driver:
+    properties:
+      car_model:
+        type: string
+      car_number:
+        type: string
+      firstname:
+        type: string
+      id:
+        type: string
+      lastname:
+        type: string
+      phone:
+        type: string
+    type: object
   models.Login:
     properties:
       login:
@@ -152,6 +167,34 @@ paths:
       summary: Login user
       tags:
       - Admin
+  /user/edit-info:
+    patch:
+      consumes:
+      - application/json
+      description: Here users' info can be modified.
+      parameters:
+      - description: admin
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/models.Driver'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Driver'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: user modifying information
+      tags:
+      - User
   /user/send-number:
     post:
       consumes:

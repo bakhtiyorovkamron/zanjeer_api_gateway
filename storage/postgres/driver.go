@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/google/uuid"
@@ -21,4 +22,43 @@ func (p *postgresRepo) CreateDriver(req models.Driver) (models.Driver, error) {
 		return res, err
 	}
 	return res, nil
+}
+func (p *postgresRepo) UpdateDriverInfo(req models.Driver) (models.Driver, error) {
+	var res models.Driver
+
+	err := p.Db.Db.QueryRow(`
+	WITH d AS (
+		SELECT * FROM "drivers" WHERE id=$1
+	)
+	UPDATE "drivers" SET 
+	phone = (
+		CASE 
+			WHEN length($2) > 0 THEN $2
+			ELSE d.phone
+		END
+	),
+	first_name = (
+		CASE 
+			WHEN length($3) > 0 THEN $3
+			ELSE d.first_name
+		END
+	),
+	last_name = (
+		CASE
+			WHEN length($4) > 0 THEN $4
+			ELSE d.last_name
+		END
+	)
+	FROM d
+	WHERE drivers.id = d.id
+	RETURNING drivers.id,drivers.phone,drivers.first_name,drivers.last_name
+	`, req.Id, req.Phone, req.Firstname, req.Lastname).Scan(&res.Id, &res.Phone, &res.Firstname, &res.Lastname)
+	if err != nil {
+		if strings.ContainsAny(err.Error(), "no rows found") {
+			return res, fmt.Errorf("driver does not exist")
+		}
+		return res, err
+	}
+	return res, err
+
 }

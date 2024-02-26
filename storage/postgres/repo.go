@@ -8,5 +8,9 @@ type PostgresI interface {
 	GetAdmins(req models.GetAdmins) ([]models.Admin, error)
 	CreateOTP(req models.SmsOtp) (models.Sms, error)
 	ConfirmOTP(req models.ConfirmOTP) error
+
+	//Driver represents
 	CreateDriver(req models.Driver) (models.Driver, error)
+	UpdateDriverInfo(req models.Driver) (models.Driver, error)
+	//
 }

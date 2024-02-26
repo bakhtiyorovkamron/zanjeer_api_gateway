@@ -25,3 +25,14 @@ CREATE TRIGGER sms_confirm
 BEFORE UPDATE ON "sms"
 FOR EACH ROW
 EXECUTE PROCEDURE check_sms_code();
+
+
+WITH d AS (
+    SELECT * FROM "drivers"
+)
+UPDATE "drivers" SET 
+phone = d.phone
+FROM d
+RETURNING *
+
+

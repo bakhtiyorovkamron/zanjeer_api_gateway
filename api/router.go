@@ -48,6 +48,8 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 	user.POST("/verify-number", h.VerifyNumber)
 
 	user.PATCH("/edit-info", h.UpdateDriverInfo)
+	user.GET("/:id", h.GetDriverInfo)
+	user.DELETE("/:id", h.DeleteDriverInfo)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("swagger/doc.json")))
 	return r

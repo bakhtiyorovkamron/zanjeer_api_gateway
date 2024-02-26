@@ -12,5 +12,7 @@ type PostgresI interface {
 	//Driver represents
 	CreateDriver(req models.Driver) (models.Driver, error)
 	UpdateDriverInfo(req models.Driver) (models.Driver, error)
+	GetDriverInfo(id string) (models.Driver, error)
+	DeleteDriver(id string) error
 	//
 }

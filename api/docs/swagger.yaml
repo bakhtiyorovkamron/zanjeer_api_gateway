@@ -14,10 +14,6 @@ definitions:
     type: object
   models.Driver:
     properties:
-      car_model:
-        type: string
-      car_number:
-        type: string
       firstname:
         type: string
       id:
@@ -167,6 +163,59 @@ paths:
       summary: Login user
       tags:
       - Admin
+  /user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Here drivers can be deleted.
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: user delete
+      tags:
+      - Driver
+    get:
+      consumes:
+      - application/json
+      description: Here driver's info can be fetched.
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Driver'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get info about driver
+      tags:
+      - Driver
   /user/edit-info:
     patch:
       consumes:
@@ -194,7 +243,7 @@ paths:
       - BearerAuth: []
       summary: user modifying information
       tags:
-      - User
+      - Driver
   /user/send-number:
     post:
       consumes:
@@ -222,7 +271,7 @@ paths:
       - BearerAuth: []
       summary: user sending number
       tags:
-      - User
+      - Driver
   /user/verify-number:
     post:
       consumes:
@@ -250,5 +299,5 @@ paths:
       - BearerAuth: []
       summary: user verifying number
       tags:
-      - User
+      - Driver
 swagger: "2.0"

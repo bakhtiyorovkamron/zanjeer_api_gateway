@@ -9,7 +9,7 @@ import (
 
 // @Router		/user/send-number [POST]
 // @Summary		user sending number
-// @Tags        User
+// @Tags        Driver
 // @Description	Here users can be registered.
 // @Accept      json
 // @Produce		json
@@ -68,7 +68,7 @@ func (h *handlerV1) SendNumber(c *gin.Context) {
 
 // @Router		/user/verify-number [POST]
 // @Summary		user verifying number
-// @Tags        User
+// @Tags        Driver
 // @Description	Here users can be registered.
 // @Accept      json
 // @Produce		json
@@ -100,14 +100,15 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 	}
 	phone := "string"
 	otp.Phone = &phone
-	err := h.storage.Postgres().ConfirmOTP(otp)
-	if err != nil {
-		c.JSON(500, models.StandardResponse{
-			Status:  "error",
-			Message: err.Error(),
-		})
-		return
-	}
+
+	// err := h.storage.Postgres().ConfirmOTP(otp)
+	// if err != nil {
+	// 	c.JSON(500, models.StandardResponse{
+	// 		Status:  "error",
+	// 		Message: err.Error(),
+	// 	})
+	// 	return
+	// }
 
 	resp, err := h.storage.Postgres().CreateDriver(models.Driver{
 		Phone: *otp.Phone,

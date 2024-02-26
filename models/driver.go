@@ -5,6 +5,4 @@ type Driver struct {
 	Phone     string `json:"phone"`
 	Firstname string `json:"firstname"`
 	Lastname  string `json:"lastname"`
-	CarNumber string `json:"car_number"`
-	CarModel  string `json:"car_model"`
 }

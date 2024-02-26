@@ -4,6 +4,7 @@ import (
 	"github.com/Projects/zanjeer_api_gateway/config"
 	"github.com/Projects/zanjeer_api_gateway/pkg/logger"
 	"github.com/Projects/zanjeer_api_gateway/storage"
+	"github.com/gin-gonic/gin"
 )
 
 type handlerV1 struct {
@@ -25,4 +26,7 @@ func NewHandlerV1(h *HandlerV1Config) *handlerV1 {
 		cfg:     h.Cfg,
 		storage: h.Postgres,
 	}
+}
+func (h *handlerV1) HandleResponse(c *gin.Context, err error) bool {
+	return false
 }

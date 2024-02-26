@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/Masterminds/squirrel"
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/google/uuid"
 )
@@ -20,6 +21,22 @@ func (p *postgresRepo) CreateDriver(req models.Driver) (models.Driver, error) {
 	if err != nil {
 		fmt.Println("Error while inserting", err)
 		return res, err
+	}
+	return res, nil
+}
+func (p *postgresRepo) GetDriverInfo(id string) (models.Driver, error) {
+	var (
+		res models.Driver
+	)
+	data, err := p.Db.Db.Query("SELECT id,phone,first_name,last_name FROM drivers WHERE id = $1", id)
+	if err != nil {
+		return res, err
+	}
+	fmt.Println("data.Err() :", data.Err())
+	for data.Next() {
+		if err != data.Scan(&res.Id, &res.Phone, &res.Firstname, &res.Lastname) {
+			return res, err
+		}
 	}
 	return res, nil
 }
@@ -61,4 +78,9 @@ func (p *postgresRepo) UpdateDriverInfo(req models.Driver) (models.Driver, error
 	}
 	return res, err
 
+}
+func (p *postgresRepo) DeleteDriver(id string) error {
+	query := p.Db.Builder.Delete("drivers").Where(squirrel.Eq{"id": id})
+	_, err := query.RunWith(p.Db.Db).Exec()
+	return err
 }

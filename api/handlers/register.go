@@ -101,21 +101,14 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 	phone := ""
 	otp.Phone = &phone
 
-	if otp.Code != "1212" {
+	err := h.storage.Postgres().ConfirmOTP(otp)
+	if err != nil {
 		c.JSON(500, models.StandardResponse{
 			Status:  "error",
-			Message: "Invalid otp code",
+			Message: err.Error(),
 		})
 		return
 	}
-	// err := h.storage.Postgres().ConfirmOTP(otp)
-	// if err != nil {
-	// c.JSON(500, models.StandardResponse{
-	// 	Status:  "error",
-	// 	Message: err.Error(),
-	// })
-	// return
-	// }
 
 	resp, err := h.storage.Postgres().CreateDriver(models.Driver{
 		Phone: *otp.Phone,

@@ -192,6 +192,51 @@ const docTemplate = `{
                 }
             }
         },
+        "/device/create-device-type": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Device types can be created",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "GPS Device Type"
+                ],
+                "summary": "Device types",
+                "parameters": [
+                    {
+                        "description": "admin",
+                        "name": "post",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.DeviceType"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DeviceType"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/user/edit-info": {
             "patch": {
                 "security": [
@@ -483,9 +528,23 @@ const docTemplate = `{
                 }
             }
         },
+        "models.DeviceType": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "models.Driver": {
             "type": "object",
             "properties": {
+                "created_at": {
+                    "type": "string"
+                },
                 "firstname": {
                     "type": "string"
                 },
@@ -497,6 +556,9 @@ const docTemplate = `{
                 },
                 "phone": {
                     "type": "string"
+                },
+                "status": {
+                    "type": "boolean"
                 }
             }
         },

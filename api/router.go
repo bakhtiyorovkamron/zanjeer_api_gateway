@@ -52,6 +52,9 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 	user.DELETE("/:id", h.DeleteDriverInfo)
 	user.GET("/get-list", h.GetDriversList)
 
+	device := r.Group("/device")
+	device.POST("/create-device-type", h.CreateDeviceType)
+
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("swagger/doc.json")))
 	return r
 }

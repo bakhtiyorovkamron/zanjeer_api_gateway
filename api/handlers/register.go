@@ -98,16 +98,23 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 		SmsId: req.SmsId,
 		Code:  req.Code,
 	}
-	phone := "string"
+	phone := ""
 	otp.Phone = &phone
 
+	if otp.Code != "1212" {
+		c.JSON(500, models.StandardResponse{
+			Status:  "error",
+			Message: "Invalid otp code",
+		})
+		return
+	}
 	// err := h.storage.Postgres().ConfirmOTP(otp)
 	// if err != nil {
-	// 	c.JSON(500, models.StandardResponse{
-	// 		Status:  "error",
-	// 		Message: err.Error(),
-	// 	})
-	// 	return
+	// c.JSON(500, models.StandardResponse{
+	// 	Status:  "error",
+	// 	Message: err.Error(),
+	// })
+	// return
 	// }
 
 	resp, err := h.storage.Postgres().CreateDriver(models.Driver{
@@ -122,7 +129,11 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 	}
 	token, err := validator.GenerateToken(resp.Id, "driver")
 	if err != nil {
-
+		c.JSON(500, models.StandardResponse{
+			Status:  "error",
+			Message: "Error while generating token",
+		})
+		return
 	}
 	c.JSON(200, gin.H{
 		"message": "User verified successfully",

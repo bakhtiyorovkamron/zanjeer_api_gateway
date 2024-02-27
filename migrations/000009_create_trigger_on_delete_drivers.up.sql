@@ -7,8 +7,8 @@ END;
 $$
 LANGUAGE plpgsql;
 
-CREATE TRIGGER store_deleted_time
-  AFTER UPDATE
-  ON "city"
-  FOR EACH ROW
-  EXECUTE PROCEDURE store_deleted_time_of_driver();
+-- CREATE TRIGGER store_deleted_time
+--   AFTER UPDATE
+--   ON "city"
+--   FOR EACH ROW
+--   EXECUTE PROCEDURE store_deleted_time_of_driver();

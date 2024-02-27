@@ -10,6 +10,11 @@ github.com/PuerkitoBio/purell
 # github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
 ## explicit
 github.com/PuerkitoBio/urlesc
+# github.com/brianvoe/gofakeit/v7 v7.0.1
+## explicit; go 1.22
+github.com/brianvoe/gofakeit/v7
+github.com/brianvoe/gofakeit/v7/data
+github.com/brianvoe/gofakeit/v7/source
 # github.com/bytedance/sonic v1.10.2
 ## explicit; go 1.16
 github.com/bytedance/sonic

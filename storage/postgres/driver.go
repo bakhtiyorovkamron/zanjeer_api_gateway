@@ -93,8 +93,8 @@ func (p *postgresRepo) GetDriverList(limit, offset int64) (models.DriverList, er
 
 	query := `SELECT id,
 					phone,
-					first_name,
-					last_name,
+					coalesce(first_name,''),
+					coalesce(last_name,''),
 					created_at,
 					(select count(*) from drivers) as count
 			FROM drivers
@@ -109,6 +109,7 @@ func (p *postgresRepo) GetDriverList(limit, offset int64) (models.DriverList, er
 	for data.Next() {
 		var driver models.Driver
 		if err := data.Scan(&driver.Id, &driver.Phone, &driver.Firstname, &driver.Lastname, &driver.CreatedAt, &count); err != nil {
+			fmt.Println("err :", err)
 			return drivers, err
 		}
 		drivers.Drivers = append(drivers.Drivers, driver)

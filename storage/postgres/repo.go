@@ -18,4 +18,5 @@ type PostgresI interface {
 
 	//Devices
 	CreateDeviceType(req models.DeviceType) (models.DeviceType, error)
+	GetDeviceTypeList(req models.GetDeviceTypeListRequest) ([]models.DeviceType, error)
 }

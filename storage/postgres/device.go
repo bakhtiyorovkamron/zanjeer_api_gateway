@@ -19,3 +19,25 @@ func (p *postgresRepo) CreateDeviceType(req models.DeviceType) (models.DeviceTyp
 	}
 	return res, nil
 }
+func (p *postgresRepo) GetDeviceTypeList(req models.GetDeviceTypeListRequest) ([]models.DeviceType, error) {
+	var (
+		res []models.DeviceType
+	)
+	query := `SELECT id,
+					name
+			FROM device_type
+			WHERE name ilike  '%' || $1 || '%'
+			`
+	data, err := p.Db.Db.Query(query, req.Name)
+	if err != nil {
+		return res, err
+	}
+	for data.Next() {
+		var d models.DeviceType
+		if err := data.Scan(&d.Id, &d.Name); err != nil {
+			return res, err
+		}
+		res = append(res, d)
+	}
+	return res, nil
+}

@@ -202,6 +202,42 @@ paths:
       summary: Device types
       tags:
       - GPS Device Type
+  /device/get-list-device-type:
+    get:
+      consumes:
+      - application/json
+      description: Device types can be fetched from
+      parameters:
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.DeviceType'
+            type: array
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get device list
+      tags:
+      - GPS Device Type
   /user/{id}:
     delete:
       consumes:

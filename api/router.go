@@ -55,6 +55,7 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 	//Devices
 	device := r.Group("/device")
 	device.POST("/create-device-type", h.CreateDeviceType)
+	device.GET("/get-list-device-type", h.GetDeviceTypeList)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("swagger/doc.json")))
 	return r

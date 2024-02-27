@@ -137,3 +137,39 @@ func (h *handlerV1) GetDriversList(c *gin.Context) {
 		"data":   data,
 	})
 }
+
+// @Router /user/search [POST]
+// @Summary Get info about driver
+// @Tags Driver
+// @Description Here driver's info can be fetched by name and phone
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param  search  body models.DriverSearchRequest true "search driver"
+// @Success 200 {object} []models.Driver
+// @Failure default {object} models.StandardResponse
+func (h *handlerV1) GetDriversSearch(c *gin.Context) {
+	var res models.DriverSearchRequest
+
+	if err := c.ShouldBindJSON(&res); err != nil {
+		c.JSON(400, gin.H{
+			"status":  "error",
+			"message": err.Error(),
+			"data":    nil,
+		})
+		return
+	}
+	data, err := h.storage.Postgres().SearchDriver(res)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"status":  "error",
+			"message": err.Error(),
+			"data":    nil,
+		})
+		return
+	}
+	c.JSON(200, gin.H{
+		"status": "ok",
+		"data":   data,
+	})
+}

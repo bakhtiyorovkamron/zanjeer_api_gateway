@@ -34,6 +34,15 @@ definitions:
       status:
         type: boolean
     type: object
+  models.DriverSearchRequest:
+    properties:
+      firstname:
+        type: string
+      lastname:
+        type: string
+      phone:
+        type: string
+    type: object
   models.Login:
     properties:
       login:
@@ -349,6 +358,36 @@ paths:
       security:
       - BearerAuth: []
       summary: Get info about all drivers driver
+      tags:
+      - Driver
+  /user/search:
+    post:
+      consumes:
+      - application/json
+      description: Here driver's info can be fetched by name and phone
+      parameters:
+      - description: search driver
+        in: body
+        name: search
+        required: true
+        schema:
+          $ref: '#/definitions/models.DriverSearchRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Driver'
+            type: array
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Get info about driver
       tags:
       - Driver
   /user/send-number:

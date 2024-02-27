@@ -117,3 +117,35 @@ func (p *postgresRepo) GetDriverList(limit, offset int64) (models.DriverList, er
 
 	return drivers, nil
 }
+func (p *postgresRepo) SearchDriver(req models.DriverSearchRequest) (models.DriverList, error) {
+
+	var (
+		drivers models.DriverList
+	)
+
+	query := `SELECT id,
+					phone,
+					first_name,
+					last_name,
+					created_at
+			FROM drivers
+			WHERE phone    ilike '%' || $1 || '%'
+			OR first_name ilike '%' || $2 || '%'
+			OR last_name  ilike '%' || $3 || '%'
+			ORDER BY created_at
+			`
+	data, err := p.Db.Db.Query(query, req.Phone, req.Firstname, req.Lastname)
+	if err != nil {
+		return drivers, err
+	}
+	for data.Next() {
+		var driver models.Driver
+		if err := data.Scan(&driver.Id, &driver.Phone, &driver.Firstname, &driver.Lastname, &driver.CreatedAt); err != nil {
+			return drivers, err
+		}
+		drivers.Drivers = append(drivers.Drivers, driver)
+	}
+	drivers.Count = int32(len(drivers.Drivers))
+
+	return drivers, nil
+}

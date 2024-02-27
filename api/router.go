@@ -51,6 +51,7 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 	user.GET("/:id", h.GetDriverInfo)
 	user.DELETE("/:id", h.DeleteDriverInfo)
 	user.GET("/get-list", h.GetDriversList)
+	user.POST("/search", h.GetDriversSearch)
 
 	//Devices
 	device := r.Group("/device")

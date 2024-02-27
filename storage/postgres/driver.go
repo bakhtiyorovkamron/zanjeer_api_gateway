@@ -106,7 +106,6 @@ func (p *postgresRepo) GetDriverList(limit, offset int64) (models.DriverList, er
 	if err != nil {
 		return drivers, err
 	}
-
 	for data.Next() {
 		var driver models.Driver
 		if err := data.Scan(&driver.Id, &driver.Phone, &driver.Firstname, &driver.Lastname, &driver.CreatedAt, &count); err != nil {

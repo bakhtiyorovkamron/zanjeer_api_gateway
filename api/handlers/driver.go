@@ -92,3 +92,48 @@ func (h *handlerV1) DeleteDriverInfo(c *gin.Context) {
 
 	c.JSON(200, gin.H{"status": "success"})
 }
+
+// @Router /user/get-list [GET]
+// @Summary Get info about all drivers driver
+// @Tags Driver
+// @Description Here drivers' info can be fetched.
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param limit query int true "limit"
+// @Param offset query int true "offset"
+// @Success 200 {object} models.Driver
+// @Failure default {object} models.StandardResponse
+func (h *handlerV1) GetDriversList(c *gin.Context) {
+
+	limit, err := ParseLimitQueryParam(c)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error":  err,
+			"status": "error",
+		})
+		return
+	}
+	offset, err := ParsePageQueryParam(c)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error":  err,
+			"status": "error",
+		})
+		return
+	}
+
+	data, err := h.storage.Postgres().GetDriverList(int64(limit), int64(offset))
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error":  err,
+			"status": "error",
+		})
+		return
+	}
+
+	c.JSON(200, gin.H{
+		"status": "success",
+		"data":   data,
+	})
+}

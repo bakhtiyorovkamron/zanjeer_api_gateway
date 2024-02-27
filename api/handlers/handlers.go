@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"strconv"
+
 	"github.com/Projects/zanjeer_api_gateway/config"
 	"github.com/Projects/zanjeer_api_gateway/pkg/logger"
 	"github.com/Projects/zanjeer_api_gateway/storage"
@@ -29,4 +31,12 @@ func NewHandlerV1(h *HandlerV1Config) *handlerV1 {
 }
 func (h *handlerV1) HandleResponse(c *gin.Context, err error) bool {
 	return false
+}
+
+func ParseLimitQueryParam(c *gin.Context) (int, error) {
+	return strconv.Atoi(c.DefaultQuery("limit", "10"))
+}
+
+func ParsePageQueryParam(c *gin.Context) (int, error) {
+	return strconv.Atoi(c.DefaultQuery("offset", "1"))
 }

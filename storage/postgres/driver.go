@@ -84,3 +84,37 @@ func (p *postgresRepo) DeleteDriver(id string) error {
 	_, err := query.RunWith(p.Db.Db).Exec()
 	return err
 }
+func (p *postgresRepo) GetDriverList(limit, offset int64) (models.DriverList, error) {
+
+	var (
+		drivers models.DriverList
+		count   int32
+	)
+
+	query := `SELECT id,
+					phone,
+					first_name,
+					last_name,
+					created_at,
+					(select count(*) from drivers) as count
+			FROM drivers
+			ORDER BY created_at
+			LIMIT $1
+			OFFSET $2
+			`
+	data, err := p.Db.Db.Query(query, limit, offset-1)
+	if err != nil {
+		return drivers, err
+	}
+
+	for data.Next() {
+		var driver models.Driver
+		if err := data.Scan(&driver.Id, &driver.Phone, &driver.Firstname, &driver.Lastname, &driver.CreatedAt, &count); err != nil {
+			return drivers, err
+		}
+		drivers.Drivers = append(drivers.Drivers, driver)
+	}
+	drivers.Count = count
+
+	return drivers, nil
+}

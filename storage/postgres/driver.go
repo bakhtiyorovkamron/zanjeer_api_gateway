@@ -121,13 +121,21 @@ func (p *postgresRepo) SearchDriver(req models.DriverSearchRequest) (models.Driv
 
 	var (
 		drivers models.DriverList
+		count   int
 	)
 
 	query := `SELECT id,
 					phone,
 					first_name,
 					last_name,
-					created_at
+					created_at,
+					(
+						SELECT count(*)
+			FROM drivers
+			WHERE phone    ilike '%' || $1 || '%'
+			OR first_name ilike '%' || $2 || '%'
+			OR last_name  ilike '%' || $3 || '%'
+					) as count
 			FROM drivers
 			WHERE phone    ilike '%' || $1 || '%'
 			OR first_name ilike '%' || $2 || '%'
@@ -142,12 +150,12 @@ func (p *postgresRepo) SearchDriver(req models.DriverSearchRequest) (models.Driv
 	}
 	for data.Next() {
 		var driver models.Driver
-		if err := data.Scan(&driver.Id, &driver.Phone, &driver.Firstname, &driver.Lastname, &driver.CreatedAt); err != nil {
+		if err := data.Scan(&driver.Id, &driver.Phone, &driver.Firstname, &driver.Lastname, &driver.CreatedAt, &count); err != nil {
 			return drivers, err
 		}
 		drivers.Drivers = append(drivers.Drivers, driver)
 	}
-	drivers.Count = int32(len(drivers.Drivers))
+	drivers.Count = int32(count)
 
 	return drivers, nil
 }

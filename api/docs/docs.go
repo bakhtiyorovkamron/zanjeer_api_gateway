@@ -676,6 +676,12 @@ const docTemplate = `{
                 "lastname": {
                     "type": "string"
                 },
+                "limit": {
+                    "type": "integer"
+                },
+                "offset": {
+                    "type": "integer"
+                },
                 "phone": {
                     "type": "string"
                 }

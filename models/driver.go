@@ -13,6 +13,8 @@ type DriverList struct {
 	Drivers []Driver `json:"drivers"`
 }
 type DriverSearchRequest struct {
+	Limit     int32  `json:"limit"`
+	Offset    int32  `json:"offset"`
 	Firstname string `json:"firstname"`
 	Lastname  string `json:"lastname"`
 	Phone     string `json:"phone"`

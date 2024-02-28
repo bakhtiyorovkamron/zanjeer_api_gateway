@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"fmt"
+	"sync"
 	"testing"
 
 	"github.com/Projects/zanjeer_api_gateway/config"
@@ -28,19 +29,18 @@ func TestCreateDrivers(t *testing.T) {
 
 	var driver DriverTest
 
-	for i := 0; i < 1000; i++ {
+	var wg sync.WaitGroup
+	wg.Add(400)
+	for i := 0; i < 400; i++ {
 
-		uuid, _ := uuid.NewUUID()
+		go func(wg *sync.WaitGroup) {
+			defer wg.Done()
+			uuid, _ := uuid.NewUUID()
 
-		err = gofakeit.Struct(&driver)
-		if err != nil {
-			panic(err)
-		}
+			gofakeit.Struct(&driver)
 
-		_, err = db.Db.Query("insert into drivers (id,phone,first_name,last_name) values ($1,$2,$3,$4) returning phone,id", uuid, driver.Phone, driver.Firstname, driver.Lastname)
-		if err != nil {
-			panic(err)
-		}
+			db.Db.Query("insert into drivers (id,phone,first_name,last_name) values ($1,$2,$3,$4) returning phone,id", uuid, driver.Phone, driver.Firstname, driver.Lastname)
+		}(&wg)
 	}
-
+	wg.Wait()
 }

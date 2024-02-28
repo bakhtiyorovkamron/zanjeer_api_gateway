@@ -102,7 +102,7 @@ func (p *postgresRepo) GetDriverList(limit, offset int64) (models.DriverList, er
 			LIMIT $1
 			OFFSET $2
 			`
-	data, err := p.Db.Db.Query(query, limit, offset-1)
+	data, err := p.Db.Db.Query(query, limit, limit*(offset-1))
 	if err != nil {
 		return drivers, err
 	}

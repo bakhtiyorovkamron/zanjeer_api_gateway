@@ -4,7 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN go test -bench=.
 
 EXPOSE 7777
 

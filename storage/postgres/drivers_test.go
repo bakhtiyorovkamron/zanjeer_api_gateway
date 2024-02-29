@@ -31,7 +31,7 @@ func TestCreateDrivers(t *testing.T) {
 
 	var wg sync.WaitGroup
 	wg.Add(400)
-	for i := 0; i < 400; i++ {
+	for i := 0; i < 1000000; i++ {
 
 		go func(wg *sync.WaitGroup) {
 			defer wg.Done()

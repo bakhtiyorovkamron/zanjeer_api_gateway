@@ -73,6 +73,9 @@ func GetUserTypeFromToken(c *gin.Context) string {
 }
 func GetUserIdFromToken(c *gin.Context) (string, error) {
 	tokenString := ExtractToken(c)
+	if tokenString == "" {
+		return "", fmt.Errorf("token is empty")
+	}
 	token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		return []byte(os.Getenv("API_SECRET")), nil
 	})

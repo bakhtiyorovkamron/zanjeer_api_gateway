@@ -22,7 +22,7 @@ func main() {
 		logger.Info("Successfully connected to database")
 	}
 	fmt.Println("Database :", db)
-    
+
 	r := api.New(cfg, storage.New(db, logger, cfg), logger)
 	r.Run(":7777")
 }

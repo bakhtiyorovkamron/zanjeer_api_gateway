@@ -9,6 +9,7 @@ type StandardResponse struct {
 	Status  string `json:"status"`
 	Message string `json:"message"`
 	Data    any    `json:"data"`
+	Code    int    `json:"code"`
 }
 type LoginResponse struct {
 	Token string `json:"token"`

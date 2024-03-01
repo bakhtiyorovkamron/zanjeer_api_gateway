@@ -76,26 +76,30 @@ func (h *handlerV1) CreateDevice(c *gin.Context) {
 	var req models.CreateDeviceRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(400, gin.H{
-			"status": "error",
-			"error":  err.Error(),
-			"data":   nil,
+		h.handleResponse(c, models.StandardResponse{
+			Status:  "error",
+			Message: err.Error(),
+			Data:    nil,
+			Code:    400,
 		})
 		return
 	}
 
 	data, err := h.storage.Postgres().CreateDevice(req)
 	if err != nil {
-		c.JSON(502, gin.H{
-			"status": "error",
-			"error":  err.Error(),
-			"data":   nil,
+		h.handleResponse(c, models.StandardResponse{
+			Status:  "error",
+			Message: err.Error(),
+			Data:    nil,
+			Code:    502,
 		})
+
 		return
 	}
-	c.JSON(200, gin.H{
-		"status": "success",
-		"error":  err,
-		"data":   data,
+	h.handleResponse(c, models.StandardResponse{
+		Status:  "success",
+		Message: "device created successfully",
+		Data:    data,
+		Code:    201,
 	})
 }

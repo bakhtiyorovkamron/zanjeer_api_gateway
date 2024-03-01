@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"github.com/Projects/zanjeer_api_gateway/config"
+	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/Projects/zanjeer_api_gateway/pkg/logger"
 	"github.com/Projects/zanjeer_api_gateway/storage"
 	"github.com/gin-gonic/gin"
@@ -29,7 +30,29 @@ func NewHandlerV1(h *HandlerV1Config) *handlerV1 {
 		storage: h.Postgres,
 	}
 }
-func (h *handlerV1) HandleResponse(c *gin.Context, err error) bool {
+func (h *handlerV1) handleResponse(c *gin.Context, info models.StandardResponse) bool {
+	switch code := info.Code; {
+	case code >= 400 && code < 500:
+		c.JSON(code, gin.H{
+			"status":  "error",
+			"data":    nil,
+			"message": info.Message,
+		})
+
+	case code >= 500 && code < 500:
+		c.JSON(code, gin.H{
+			"status":  "error",
+			"data":    nil,
+			"message": info.Message,
+		})
+	case code >= 200 && code < 300:
+		c.JSON(code, gin.H{
+			"status":  "error",
+			"data":    nil,
+			"message": info.Message,
+		})
+	}
+
 	return false
 }
 

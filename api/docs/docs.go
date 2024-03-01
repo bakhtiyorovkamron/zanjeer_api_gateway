@@ -192,7 +192,52 @@ const docTemplate = `{
                 }
             }
         },
-        "/device/create-device-type": {
+        "/device/create": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Devices can be created",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Device"
+                ],
+                "summary": "Device",
+                "parameters": [
+                    {
+                        "description": "device",
+                        "name": "post",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.CreateDeviceRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.CreateDeviceRequest"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/devicetype/create-device-type": {
             "post": {
                 "security": [
                     {
@@ -237,7 +282,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/device/get-list-device-type": {
+        "/devicetype/get-list-device-type": {
             "get": {
                 "security": [
                     {
@@ -629,6 +674,26 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "type": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.CreateDeviceRequest": {
+            "type": "object",
+            "properties": {
+                "device_type_id": {
+                    "type": "string"
+                },
+                "driver_id": {
+                    "type": "string"
+                },
+                "imei": {
+                    "type": "string"
+                },
+                "ip_address": {
+                    "type": "string"
+                },
+                "name": {
                     "type": "string"
                 }
             }

@@ -14,9 +14,8 @@ import (
 func TestCreateAdmin(t *testing.T) {
 	var resp models.Admin
 
-	resp.Login = "shaxzod"
-	resp.Password = "shaxzod123"
-
+	resp.Login = "admin"
+	resp.Password = "admin"
 	cfg := config.Load()
 
 	logger := logger.New(cfg.LogLevel)

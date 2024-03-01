@@ -12,6 +12,19 @@ definitions:
       type:
         type: string
     type: object
+  models.CreateDeviceRequest:
+    properties:
+      device_type_id:
+        type: string
+      driver_id:
+        type: string
+      imei:
+        type: string
+      ip_address:
+        type: string
+      name:
+        type: string
+    type: object
   models.DeviceType:
     properties:
       id:
@@ -187,7 +200,35 @@ paths:
       summary: Login user
       tags:
       - Admin
-  /device/create-device-type:
+  /device/create:
+    post:
+      consumes:
+      - application/json
+      description: Devices can be created
+      parameters:
+      - description: device
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateDeviceRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.CreateDeviceRequest'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Device
+      tags:
+      - Device
+  /devicetype/create-device-type:
     post:
       consumes:
       - application/json
@@ -215,7 +256,7 @@ paths:
       summary: Device types
       tags:
       - GPS Device Type
-  /device/get-list-device-type:
+  /devicetype/get-list-device-type:
     get:
       consumes:
       - application/json

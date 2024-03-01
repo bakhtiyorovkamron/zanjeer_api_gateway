@@ -15,9 +15,11 @@ type PostgresI interface {
 	GetDriverInfo(id string) (models.Driver, error)
 	DeleteDriver(id string) error
 	GetDriverList(limit, offset int64) (models.DriverList, error)
+	SearchDriver(req models.DriverSearchRequest) (models.DriverList, error)
 
-	//Devices
+	//Devices' Type
 	CreateDeviceType(req models.DeviceType) (models.DeviceType, error)
 	GetDeviceTypeList(req models.GetDeviceTypeListRequest) ([]models.DeviceType, error)
-	SearchDriver(req models.DriverSearchRequest) (models.DriverList, error)
+
+	CreateDevice(req models.CreateDeviceRequest) (models.CreateDeviceResponse, error)
 }

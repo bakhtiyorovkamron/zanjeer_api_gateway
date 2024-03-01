@@ -1,0 +1,1 @@
+ALTER TABLE devices ADD CONSTRAINT imei_unique UNIQUE(imei);

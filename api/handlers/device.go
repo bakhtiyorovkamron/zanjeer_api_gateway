@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// @Router 		/device/create-device-type [POST]
+// @Router 		/devicetype/create-device-type [POST]
 // @Summary		Device types
 // @Tags        GPS Device Type
 // @Description	Device types can be created
@@ -32,7 +32,7 @@ func (h *handlerV1) CreateDeviceType(c *gin.Context) {
 	c.JSON(200, gin.H{"status": "success", "data": data})
 }
 
-// @Router /device/get-list-device-type [GET]
+// @Router /devicetype/get-list-device-type [GET]
 // @Summary Get device list
 // @Tags  GPS Device Type
 // @Description	Device types can be fetched from
@@ -57,6 +57,45 @@ func (h *handlerV1) GetDeviceTypeList(c *gin.Context) {
 	}
 	c.JSON(200, gin.H{
 		"status": "ok",
+		"data":   data,
+	})
+}
+
+// @Router 		/device/create [POST]
+// @Summary		Device
+// @Tags        Device
+// @Description	Devices can be created
+// @Accept      json
+// @Produce		json
+// @Security    BearerAuth
+// @Param       post   body       models.CreateDeviceRequest true "device"
+// @Success		200 	{object}  models.CreateDeviceRequest
+// @Failure     default {object}  models.StandardResponse
+func (h *handlerV1) CreateDevice(c *gin.Context) {
+
+	var req models.CreateDeviceRequest
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{
+			"status": "error",
+			"error":  err.Error(),
+			"data":   nil,
+		})
+		return
+	}
+
+	data, err := h.storage.Postgres().CreateDevice(req)
+	if err != nil {
+		c.JSON(502, gin.H{
+			"status": "error",
+			"error":  err.Error(),
+			"data":   nil,
+		})
+		return
+	}
+	c.JSON(200, gin.H{
+		"status": "success",
+		"error":  err,
 		"data":   data,
 	})
 }

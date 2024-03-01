@@ -122,8 +122,7 @@ func (h *handlerV1) GetDriversList(c *gin.Context) {
 		})
 		return
 	}
-	fmt.Println("Limit : ", limit)
-	fmt.Println("Offset : ", offset)
+
 	data, err := h.storage.Postgres().GetDriverList(int64(limit), int64(offset))
 	if err != nil {
 		c.JSON(400, gin.H{

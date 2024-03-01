@@ -53,10 +53,14 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 	user.GET("/get-list", h.GetDriversList)
 	user.POST("/search", h.GetDriversSearch)
 
+	//Devices Type
+	deviceType := r.Group("/devicetype")
+	deviceType.POST("/create-device-type", h.CreateDeviceType)
+	deviceType.GET("/get-list-device-type", h.GetDeviceTypeList)
+
 	//Devices
 	device := r.Group("/device")
-	device.POST("/create-device-type", h.CreateDeviceType)
-	device.GET("/get-list-device-type", h.GetDeviceTypeList)
+	device.POST("/create", h.CreateDevice)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("swagger/doc.json")))
 	return r

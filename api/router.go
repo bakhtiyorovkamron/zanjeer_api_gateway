@@ -7,6 +7,7 @@ import (
 	"github.com/Projects/zanjeer_api_gateway/pkg/logger"
 	"github.com/Projects/zanjeer_api_gateway/storage"
 	"github.com/gin-contrib/cors"
+
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -61,6 +62,9 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 	//Devices
 	device := r.Group("/device")
 	device.POST("/create", h.CreateDevice)
+
+	//Location
+	device.GET("/location", h.GetLocation)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("swagger/doc.json")))
 	return r

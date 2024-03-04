@@ -25,3 +25,8 @@ type CreateDeviceResponse struct {
 	IpAddress string `json:"ip_address"`
 	CreatedAt string `json:"created_at"`
 }
+
+type DevicesTeletonikaInfo struct {
+	Longitude int `json:"longitude"`
+	Latitude  int `json:"latitude"`
+}

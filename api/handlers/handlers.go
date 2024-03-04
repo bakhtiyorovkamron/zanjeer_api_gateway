@@ -47,8 +47,8 @@ func (h *handlerV1) handleResponse(c *gin.Context, info models.StandardResponse)
 		})
 	case code >= 200 && code < 300:
 		c.JSON(code, gin.H{
-			"status":  "error",
-			"data":    nil,
+			"status":  "success",
+			"data":    info.Data,
 			"message": info.Message,
 		})
 	}

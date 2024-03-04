@@ -80,9 +80,11 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 	var req models.Sms
 	if err := c.ShouldBindJSON(&req); err != nil {
 		h.log.Error("Error while binding request", err)
-		c.JSON(400, models.StandardResponse{
+		h.handleResponse(c, models.StandardResponse{
 			Status:  "error",
-			Message: "Invalid request",
+			Message: "Bad request",
+			Data:    nil,
+			Code:    400,
 		})
 		return
 	}
@@ -103,9 +105,11 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 
 	err := h.storage.Postgres().ConfirmOTP(otp)
 	if err != nil {
-		c.JSON(500, models.StandardResponse{
+		h.handleResponse(c, models.StandardResponse{
 			Status:  "error",
-			Message: err.Error(),
+			Message: "Error",
+			Data:    nil,
+			Code:    502,
 		})
 		return
 	}
@@ -114,17 +118,21 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 		Phone: *otp.Phone,
 	})
 	if err != nil {
-		c.JSON(500, models.StandardResponse{
+		h.handleResponse(c, models.StandardResponse{
 			Status:  "error",
-			Message: "Error while creating driver",
+			Message: "Error",
+			Data:    nil,
+			Code:    502,
 		})
 		return
 	}
 	token, err := validator.GenerateToken(resp.Id, "driver")
 	if err != nil {
-		c.JSON(500, models.StandardResponse{
+		h.handleResponse(c, models.StandardResponse{
 			Status:  "error",
-			Message: "Error while generating token",
+			Message: "Error",
+			Data:    nil,
+			Code:    502,
 		})
 		return
 	}

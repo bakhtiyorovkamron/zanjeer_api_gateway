@@ -93,7 +93,6 @@ func (h *handlerV1) CreateDevice(c *gin.Context) {
 			Data:    nil,
 			Code:    502,
 		})
-
 		return
 	}
 	h.handleResponse(c, models.StandardResponse{

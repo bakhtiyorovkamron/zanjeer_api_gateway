@@ -61,10 +61,10 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 
 	//Devices
 	device := r.Group("/device")
+	r.GET("/ws", h.GetLocation)
 	device.POST("/create", h.CreateDevice)
 
 	//Location
-	device.GET("/location", h.GetLocation)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, ginSwagger.URL("swagger/doc.json")))
 	return r

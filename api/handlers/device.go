@@ -111,7 +111,7 @@ func (h *handlerV1) CreateDevice(c *gin.Context) {
 	})
 }
 
-// @Router /device/location [GET]
+// @Router /ws [GET]
 // @Summary		Device
 // @Tags        Device
 // @Description	Devices can be created

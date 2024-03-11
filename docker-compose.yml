@@ -10,7 +10,7 @@ services:
     image: migrate/migrate:v4.15.2
     volumes:
       - ./migrations:/migrations
-    entrypoint: migrate -path ./migrations -database "postgres://zanjeer:password@5.39.92.50:5432/zanjeer?sslmode=disable"
+    entrypoint: migrate -path ./migrations -database "postgres://zanjeer:zanjeer@204.12.199.7:5432/zanjeer?sslmode=disable"
     command: up
     restart: on-failure
 

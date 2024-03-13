@@ -22,15 +22,15 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 		Postgres: strg,
 	})
 
-	r.GET("/ws", h.GetLocation)
-
 	corsConfig := cors.DefaultConfig()
 	corsConfig.AllowAllOrigins = true
 	corsConfig.AllowCredentials = true
 	corsConfig.AllowHeaders = []string{"*"}
 	corsConfig.AllowBrowserExtensions = true
 	corsConfig.AllowMethods = []string{"*"}
+	corsConfig.AllowWebSockets = true
 	r.Use(cors.New(corsConfig))
+	r.GET("/ws", h.GetLocation)
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{

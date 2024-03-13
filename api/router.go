@@ -22,6 +22,8 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 		Postgres: strg,
 	})
 
+	r.GET("/ws", h.GetLocation)
+
 	corsConfig := cors.DefaultConfig()
 	corsConfig.AllowAllOrigins = true
 	corsConfig.AllowCredentials = true
@@ -61,7 +63,6 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 
 	//Devices
 	device := r.Group("/device")
-	r.GET("/ws", h.GetLocation)
 	device.POST("/create", h.CreateDevice)
 
 	//Location

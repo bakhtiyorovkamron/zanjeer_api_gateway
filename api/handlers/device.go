@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -136,8 +137,8 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 			log.Println(err)
 			return
 		}
-		log.Println(string(p))
-		conn.WriteMessage(websocket.TextMessage, []byte(string(p)))
+		fmt.Println(string(p))
+		conn.WriteMessage(websocket.TextMessage, []byte("Sent by server : "+string(p)))
 		time.Sleep(time.Second)
 	}
 }

@@ -128,13 +128,14 @@ func (h *handlerV1) CreateDevice(c *gin.Context) {
 func (h *handlerV1) GetLocation(c *gin.Context) {
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
+		log.Println("err :", err)
 		return
 	}
 	defer conn.Close()
 	for {
 		_, p, err := conn.ReadMessage()
 		if err != nil {
-			log.Println(err)
+			log.Println("err :", err)
 			return
 		}
 		fmt.Println(string(p))

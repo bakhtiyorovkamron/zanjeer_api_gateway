@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"time"
 
 	"github.com/Projects/zanjeer_api_gateway/models"
@@ -130,7 +131,13 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 	}
 	defer conn.Close()
 	for {
-		conn.WriteMessage(websocket.TextMessage, []byte("Hello, WebSocket!"))
+		_, p, err := conn.ReadMessage()
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		log.Println(string(p))
+		conn.WriteMessage(websocket.TextMessage, []byte(string(p)))
 		time.Sleep(time.Second)
 	}
 }

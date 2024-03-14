@@ -22,4 +22,6 @@ type PostgresI interface {
 	GetDeviceTypeList(req models.GetDeviceTypeListRequest) ([]models.DeviceType, error)
 
 	CreateDevice(req models.CreateDeviceRequest) (models.CreateDeviceResponse, error)
+
+	GetDeviceLocation(req models.GetDeviceLocationRequest) ([]models.GetDeviceLocationResponse, error)
 }

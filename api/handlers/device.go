@@ -1,10 +1,12 @@
 package handlers
 
 import (
-	"fmt"
+	"encoding/json"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/go-co-op/gocron"
 
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/gin-gonic/gin"
@@ -143,8 +145,26 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 			log.Println("err :", err)
 			return
 		}
-		fmt.Println(string(p))
-		conn.WriteMessage(websocket.TextMessage, []byte("Sent by server : "+string(p)))
+		SendTOClient(h, conn, string(p))
 		time.Sleep(time.Second)
 	}
+}
+
+func SendTOClient(h *handlerV1, conn *websocket.Conn, msg string) {
+	// 3
+	s := gocron.NewScheduler(time.UTC)
+
+	// 4
+	s.Every(1).Seconds().Do(func() {
+		if data, err := h.storage.Postgres().GetDeviceLocation(models.GetDeviceLocationRequest{}); err == nil {
+			d, _ := json.MarshalIndent(data, "", " ")
+			conn.WriteMessage(websocket.TextMessage, d)
+		} else {
+			log.Println("Error :", err)
+		}
+
+	})
+
+	// 5
+	s.StartBlocking()
 }

@@ -39,7 +39,7 @@ func (h *handlerV1) handleResponse(c *gin.Context, info models.StandardResponse)
 			"message": info.Message,
 		})
 
-	case code >= 500 && code < 500:
+	case code >= 500 && code < 600:
 		c.JSON(code, gin.H{
 			"status":  "error",
 			"data":    nil,

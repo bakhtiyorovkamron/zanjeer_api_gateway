@@ -37,7 +37,6 @@ func (p *postgresRepo) Login(req models.Login) (models.LoginResponse, error) {
 	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
 		return resp, errors.New("Invalid login or password mismatch")
 	}
-	fmt.Println("Admin type", resp.Admin.Type)
 	token, err := validator.GenerateToken(resp.Admin.Id, resp.Admin.Type)
 	if err != nil {
 		return resp, err

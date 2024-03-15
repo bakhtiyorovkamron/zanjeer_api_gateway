@@ -434,6 +434,51 @@ const docTemplate = `{
                 }
             }
         },
+        "/user/register": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Here users can be registered.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Driver"
+                ],
+                "summary": "user registeration",
+                "parameters": [
+                    {
+                        "description": "driver",
+                        "name": "post",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Driver"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Driver"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/user/search": {
             "post": {
                 "security": [
@@ -655,6 +700,60 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/ws": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Devices can be created",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Device"
+                ],
+                "summary": "Device",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.DevicesTeletonikaInfo"
+                        }
+                    },
+                    "default": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.StandardResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -709,6 +808,17 @@ const docTemplate = `{
                 }
             }
         },
+        "models.DevicesTeletonikaInfo": {
+            "type": "object",
+            "properties": {
+                "latitude": {
+                    "type": "integer"
+                },
+                "longitude": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.Driver": {
             "type": "object",
             "properties": {
@@ -728,6 +838,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "status": {
+                    "type": "boolean"
+                },
+                "verified": {
                     "type": "boolean"
                 }
             }
@@ -783,6 +896,9 @@ const docTemplate = `{
         "models.StandardResponse": {
             "type": "object",
             "properties": {
+                "code": {
+                    "type": "integer"
+                },
                 "data": {},
                 "message": {
                     "type": "string"

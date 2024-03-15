@@ -7,6 +7,7 @@ type Driver struct {
 	Lastname  string `json:"lastname"`
 	Status    bool   `json:"status"`
 	CreatedAt string `json:"created_at"`
+	Verified  bool   `json:"verified"`
 }
 type DriverList struct {
 	Count   int32    `json:"count"`

@@ -32,6 +32,13 @@ definitions:
       name:
         type: string
     type: object
+  models.DevicesTeletonikaInfo:
+    properties:
+      latitude:
+        type: integer
+      longitude:
+        type: integer
+    type: object
   models.Driver:
     properties:
       created_at:
@@ -45,6 +52,8 @@ definitions:
       phone:
         type: string
       status:
+        type: boolean
+      verified:
         type: boolean
     type: object
   models.DriverSearchRequest:
@@ -80,6 +89,8 @@ definitions:
     type: object
   models.StandardResponse:
     properties:
+      code:
+        type: integer
       data: {}
       message:
         type: string
@@ -405,6 +416,34 @@ paths:
       summary: Get info about all drivers driver
       tags:
       - Driver
+  /user/register:
+    post:
+      consumes:
+      - application/json
+      description: Here users can be registered.
+      parameters:
+      - description: driver
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/models.Driver'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Driver'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: user registeration
+      tags:
+      - Driver
   /user/search:
     post:
       consumes:
@@ -491,4 +530,38 @@ paths:
       summary: user verifying number
       tags:
       - Driver
+  /ws:
+    get:
+      consumes:
+      - application/json
+      description: Devices can be created
+      parameters:
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DevicesTeletonikaInfo'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Device
+      tags:
+      - Device
 swagger: "2.0"

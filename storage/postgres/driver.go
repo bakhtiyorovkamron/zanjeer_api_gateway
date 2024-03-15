@@ -17,9 +17,8 @@ func (p *postgresRepo) CreateDriver(req models.Driver) (models.Driver, error) {
 	if err != nil {
 		return res, err
 	}
-	err = p.Db.Db.QueryRow("insert into drivers (id,phone) values ($1,$2) returning phone,id", uuid, req.Phone).Scan(&res.Phone, &res.Id)
+	err = p.Db.Db.QueryRow("insert into drivers (id,phone,first_name,last_name) values ($1,$2,$3,$4) returning phone,id,first_name,last_name", uuid, req.Phone, req.Firstname, req.Lastname).Scan(&res.Phone, &res.Id, &res.Firstname, &res.Lastname)
 	if err != nil {
-		fmt.Println("Error while inserting", err)
 		return res, err
 	}
 	return res, nil
@@ -71,6 +70,7 @@ func (p *postgresRepo) UpdateDriverInfo(req models.Driver) (models.Driver, error
 	RETURNING drivers.id,drivers.phone,drivers.first_name,drivers.last_name
 	`, req.Id, req.Phone, req.Firstname, req.Lastname).Scan(&res.Id, &res.Phone, &res.Firstname, &res.Lastname)
 	if err != nil {
+		fmt.Println("err :", err)
 		if strings.ContainsAny(err.Error(), "no rows found") {
 			return res, fmt.Errorf("driver does not exist")
 		}
@@ -132,14 +132,14 @@ func (p *postgresRepo) SearchDriver(req models.DriverSearchRequest) (models.Driv
 					(
 						SELECT count(*)
 			FROM drivers
-			WHERE phone    ilike '%' || $1 || '%'
-			OR first_name ilike '%' || $2 || '%'
-			OR last_name  ilike '%' || $3 || '%'
-					) as count
+			WHERE ($1='' OR phone ilike '%' || $1 || '%')
+			AND   ($2='' OR first_name ilike '%'  || $2 || '%')
+			AND   ($3='' OR last_name  ilike '%'  || $3 || '%')
+			) as count
 			FROM drivers
-			WHERE phone    ilike '%' || $1 || '%'
-			OR first_name ilike '%' || $2 || '%'
-			OR last_name  ilike '%' || $3 || '%'
+			WHERE ($1='' OR phone ilike '%' || $1 || '%')
+			AND   ($2='' OR first_name ilike '%'  || $2 || '%')
+			AND   ($3='' OR last_name  ilike '%'  || $3 || '%')
 			ORDER BY created_at
 			LIMIT $4
 			OFFSET $5
@@ -158,4 +158,21 @@ func (p *postgresRepo) SearchDriver(req models.DriverSearchRequest) (models.Driv
 	drivers.Count = int32(count)
 
 	return drivers, nil
+}
+func (p *postgresRepo) VerifyDriver(phone string) (models.Driver, error) {
+	var res models.Driver
+
+	err := p.Db.Db.QueryRow(`
+	UPDATE "drivers" SET 
+	verified = true WHERE phone = $1
+	RETURNING id,phone,first_name,last_name,verified
+	`, phone).Scan(&res.Id, &res.Phone, &res.Firstname, &res.Lastname, &res.Verified)
+	if err != nil {
+		if strings.ContainsAny(err.Error(), "no rows found") {
+			return res, fmt.Errorf("driver does not exist")
+		}
+		return res, err
+	}
+	return res, err
+
 }

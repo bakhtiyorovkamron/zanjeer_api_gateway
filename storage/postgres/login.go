@@ -2,7 +2,6 @@ package postgres
 
 import (
 	"errors"
-	"fmt"
 
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/Projects/zanjeer_api_gateway/pkg/validator"
@@ -19,13 +18,11 @@ func (p *postgresRepo) Login(req models.Login) (models.LoginResponse, error) {
 
 	data, err := p.Db.Db.Query("select login,password,id,type,created_at from admins where login = $1", req.Login)
 	if err != nil {
-		fmt.Println("Error while querying", err)
 		return resp, err
 	}
 	for data.Next() {
 		err = data.Scan(&res, &password, &resp.Admin.Id, &resp.Admin.Type, &resp.Admin.CreatedAt)
 		if err != nil {
-			fmt.Println("Error while scanning", err)
 			return resp, err
 		}
 	}

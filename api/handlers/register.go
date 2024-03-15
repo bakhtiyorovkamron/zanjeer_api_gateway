@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"fmt"
-
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/Projects/zanjeer_api_gateway/pkg/util"
 	"github.com/Projects/zanjeer_api_gateway/pkg/validator"
@@ -144,7 +142,6 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 		Phone: &phone,
 	})
 	if err != nil {
-		fmt.Println("OTP Error: ", err)
 		h.handleResponse(c, models.StandardResponse{
 			Status:  "error",
 			Message: err.Error(),
@@ -153,7 +150,6 @@ func (h *handlerV1) VerifyNumber(c *gin.Context) {
 		})
 		return
 	}
-	fmt.Println("OTP CONFIRMATION SUCCESSFUL :", phone)
 	resp, err := h.storage.Postgres().VerifyDriver(phone)
 	if err != nil {
 		h.handleResponse(c, models.StandardResponse{
@@ -216,7 +212,6 @@ func (h *handlerV1) UserRegister(c *gin.Context) {
 
 	resp, err := h.storage.Postgres().CreateDriver(req)
 	if err != nil {
-		fmt.Println("Error creating driver :", err)
 		h.handleResponse(c, models.StandardResponse{
 			Status:  "error",
 			Message: "Error",

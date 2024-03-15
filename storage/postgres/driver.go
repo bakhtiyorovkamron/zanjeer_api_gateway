@@ -31,7 +31,6 @@ func (p *postgresRepo) GetDriverInfo(id string) (models.Driver, error) {
 	if err != nil {
 		return res, err
 	}
-	fmt.Println("data.Err() :", data.Err())
 	for data.Next() {
 		if err != data.Scan(&res.Id, &res.Phone, &res.Firstname, &res.Lastname) {
 			return res, err
@@ -70,7 +69,6 @@ func (p *postgresRepo) UpdateDriverInfo(req models.Driver) (models.Driver, error
 	RETURNING drivers.id,drivers.phone,drivers.first_name,drivers.last_name
 	`, req.Id, req.Phone, req.Firstname, req.Lastname).Scan(&res.Id, &res.Phone, &res.Firstname, &res.Lastname)
 	if err != nil {
-		fmt.Println("err :", err)
 		if strings.ContainsAny(err.Error(), "no rows found") {
 			return res, fmt.Errorf("driver does not exist")
 		}

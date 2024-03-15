@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"fmt"
-
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/gin-gonic/gin"
 )
@@ -24,7 +22,6 @@ func (h *handlerV1) UpdateDriverInfo(c *gin.Context) {
 		c.JSON(400, gin.H{"error": "Invalid request"})
 		return
 	}
-	fmt.Println("driver id: ", driver.Id)
 	if (driver.Id) == "" {
 		c.JSON(400, gin.H{"error": "id is required"})
 		return

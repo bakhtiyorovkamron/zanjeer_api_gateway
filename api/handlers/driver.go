@@ -155,6 +155,12 @@ func (h *handlerV1) GetDriversSearch(c *gin.Context) {
 		})
 		return
 	}
+	if res.Limit == 0 {
+		res.Limit = 1
+	}
+	if res.Offset == 0 {
+		res.Offset = 1
+	}
 	data, err := h.storage.Postgres().SearchDriver(res)
 	if err != nil {
 		c.JSON(400, gin.H{

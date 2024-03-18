@@ -6,11 +6,17 @@ import (
 
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (p *postgresRepo) CreateAdmin(req models.Admin) (models.Admin, error) {
 
 	var admin models.Admin
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return admin, err
+	}
 
 	uuid, err := uuid.NewUUID()
 	if err != nil {
@@ -20,7 +26,7 @@ func (p *postgresRepo) CreateAdmin(req models.Admin) (models.Admin, error) {
 		return admin, fmt.Errorf("login and password are required")
 	}
 
-	result := p.Db.Db.QueryRow("insert into admins (id,login,password,type) values ($1,$2,$3,$4) returning id,login,created_at", uuid.String(), req.Login, req.Password, "admin")
+	result := p.Db.Db.QueryRow("insert into admins (id,login,password,type,first_name,last_name,phone) values ($1,$2,$3,$4,$5,$6,$7) returning id,login,created_at", uuid.String(), req.Login, hashedPassword, "admin", req.Firstname, req.Lastname, req.Phone)
 	if err != nil {
 		return admin, err
 	}

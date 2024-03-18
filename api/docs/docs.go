@@ -763,13 +763,22 @@ const docTemplate = `{
                 "created_at": {
                     "type": "string"
                 },
+                "firstname": {
+                    "type": "string"
+                },
                 "id": {
+                    "type": "string"
+                },
+                "lastname": {
                     "type": "string"
                 },
                 "login": {
                     "type": "string"
                 },
                 "password": {
+                    "type": "string"
+                },
+                "phone": {
                     "type": "string"
                 },
                 "type": {

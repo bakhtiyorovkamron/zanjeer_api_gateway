@@ -131,7 +131,7 @@ func (h *handlerV1) GetInfo(c *gin.Context) {
 	}
 	data, err := h.storage.Postgres().GetAdmins(models.GetAdminsRequest{
 		Id:    id,
-		Page:  0,
+		Page:  1,
 		Limit: 1,
 	})
 	if err != nil {

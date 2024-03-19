@@ -52,6 +52,7 @@ func (h *handlerV1) CreateAdmin(c *gin.Context) {
 // @Security BearerAuth
 // @Param limit query string true "limit"
 // @Param offset query string true "offset"
+// @Param first_name query string "first_name"
 // @Success 200 {object} []models.Admin
 // @Failure default {object} models.StandardResponse
 func (h *handlerV1) GetAdmins(c *gin.Context) {
@@ -59,6 +60,11 @@ func (h *handlerV1) GetAdmins(c *gin.Context) {
 	id, ok := c.GetQuery("id")
 	if !ok {
 		id = ""
+	}
+
+	firstName, ok := c.GetQuery("first_name")
+	if !ok {
+		firstName = ""
 	}
 
 	limit, ok := c.GetQuery("limit")
@@ -84,9 +90,10 @@ func (h *handlerV1) GetAdmins(c *gin.Context) {
 	}
 
 	data, err := h.storage.Postgres().GetAdmins(models.GetAdmins{
-		Limit: limitInt,
-		Page:  pageInt,
-		Id:    id,
+		Limit:     limitInt,
+		Page:      pageInt,
+		Id:        id,
+		Firstname: firstName,
 	})
 	if err != nil {
 		c.JSON(400, gin.H{

@@ -42,7 +42,10 @@ func (p *postgresRepo) CreateAdmin(req models.Admin) (models.Admin, error) {
 func (p *postgresRepo) GetAdmins(req models.GetAdmins) ([]models.Admin, error) {
 	var admins []models.Admin
 	var admin models.Admin
-	rows, err := p.Db.Db.Query("select id,login,created_at,type from admins where (id = $1 or $1 = '') limit $2 offset $3", req.Id, req.Limit, req.Page)
+	rows, err := p.Db.Db.Query(`select id,login,created_at,type from admins 
+	where  (first_name ilike '%' || $1 || '%' )
+	AND ($4='' OR id = $4)
+	limit $2 offset $3`, req.Firstname, req.Limit, req.Limit*(req.Page-1), req.Id)
 	if err != nil {
 		return admins, err
 	}

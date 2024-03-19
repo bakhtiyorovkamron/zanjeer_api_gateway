@@ -11,7 +11,8 @@ type Admin struct {
 	CreatedAt string `json:"created_at"`
 }
 type GetAdmins struct {
-	Limit int    `json:"limit"`
-	Page  int    `json:"page"`
-	Id    string `json:"id"`
+	Limit     int    `json:"limit"`
+	Page      int    `json:"page"`
+	Id        string `json:"id"`
+	Firstname string `json:"firstname"`
 }

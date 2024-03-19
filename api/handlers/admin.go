@@ -50,9 +50,10 @@ func (h *handlerV1) CreateAdmin(c *gin.Context) {
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Param limit query string true "limit"
-// @Param offset query string true "offset"
-// @Param first_name query string "first_name"
+// @Param limit query string false "limit"
+// @Param offset query string false "offset"
+// @Param first_name query string false "first_name"
+// @Param id query string false "id"
 // @Success 200 {object} []models.Admin
 // @Failure default {object} models.StandardResponse
 func (h *handlerV1) GetAdmins(c *gin.Context) {
@@ -69,12 +70,12 @@ func (h *handlerV1) GetAdmins(c *gin.Context) {
 
 	limit, ok := c.GetQuery("limit")
 	if !ok {
-		limit = "10"
+		limit = "1"
 	}
 
 	page, ok := c.GetQuery("page")
 	if !ok {
-		page = "0"
+		page = "1"
 	}
 	limitInt, err := strconv.Atoi(limit)
 	if err != nil {

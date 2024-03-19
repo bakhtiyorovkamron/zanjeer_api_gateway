@@ -143,12 +143,18 @@ paths:
       - description: limit
         in: query
         name: limit
-        required: true
         type: string
       - description: offset
         in: query
         name: offset
-        required: true
+        type: string
+      - description: first_name
+        in: query
+        name: first_name
+        type: string
+      - description: id
+        in: query
+        name: id
         type: string
       produces:
       - application/json

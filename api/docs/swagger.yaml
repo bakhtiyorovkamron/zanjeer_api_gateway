@@ -75,6 +75,15 @@ definitions:
       phone:
         type: string
     type: object
+  models.GetAdminsResponse:
+    properties:
+      admins:
+        items:
+          $ref: '#/definitions/models.Admin'
+        type: array
+      count:
+        type: integer
+    type: object
   models.Login:
     properties:
       login:
@@ -163,7 +172,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Admin'
+              $ref: '#/definitions/models.GetAdminsResponse'
             type: array
         default:
           description: ""

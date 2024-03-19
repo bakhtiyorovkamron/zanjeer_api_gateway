@@ -110,7 +110,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Admin"
+                                "$ref": "#/definitions/models.GetAdminsResponse"
                             }
                         }
                     },
@@ -881,6 +881,20 @@ const docTemplate = `{
                 },
                 "phone": {
                     "type": "string"
+                }
+            }
+        },
+        "models.GetAdminsResponse": {
+            "type": "object",
+            "properties": {
+                "admins": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Admin"
+                    }
+                },
+                "count": {
+                    "type": "integer"
                 }
             }
         },

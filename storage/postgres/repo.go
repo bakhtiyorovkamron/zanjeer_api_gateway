@@ -5,7 +5,7 @@ import "github.com/Projects/zanjeer_api_gateway/models"
 type PostgresI interface {
 	Login(req models.Login) (models.LoginResponse, error)
 	CreateAdmin(req models.Admin) (models.Admin, error)
-	GetAdmins(req models.GetAdmins) ([]models.Admin, error)
+	GetAdmins(req models.GetAdminsRequest) (models.GetAdminsResponse, error)
 	CreateOTP(req models.SmsOtp) (models.Sms, error)
 	ConfirmOTP(req models.ConfirmOTP) error
 

@@ -39,10 +39,15 @@ func (p *postgresRepo) CreateAdmin(req models.Admin) (models.Admin, error) {
 
 	return admin, nil
 }
-func (p *postgresRepo) GetAdmins(req models.GetAdmins) ([]models.Admin, error) {
-	var admins []models.Admin
-	var admin models.Admin
-	rows, err := p.Db.Db.Query(`select id,login,created_at,type,first_name,last_name,phone from admins 
+func (p *postgresRepo) GetAdmins(req models.GetAdminsRequest) (models.GetAdminsResponse, error) {
+	var (
+		admins models.GetAdminsResponse
+	)
+	rows, err := p.Db.Db.Query(`select id,login,created_at,type,first_name,last_name,phone,(
+		select count(*) from admins where  (first_name ilike '%' || $1 || '%' )
+		AND ($4='' OR id = $4)
+	) as count
+	from admins 
 	where  (first_name ilike '%' || $1 || '%' )
 	AND ($4='' OR id = $4)
 	limit $2 offset $3`, req.Firstname, req.Limit, req.Limit*(req.Page-1), req.Id)
@@ -50,11 +55,13 @@ func (p *postgresRepo) GetAdmins(req models.GetAdmins) ([]models.Admin, error) {
 		return admins, err
 	}
 	for rows.Next() {
-		err = rows.Scan(&admin.Id, &admin.Login, &admin.CreatedAt, &admin.Type, &admin.Firstname, &admin.Lastname, &admin.Phone)
+		var admin models.Admin
+
+		err = rows.Scan(&admin.Id, &admin.Login, &admin.CreatedAt, &admin.Type, &admin.Firstname, &admin.Lastname, &admin.Phone, &admins.Count)
 		if err != nil {
 			return admins, err
 		}
-		admins = append(admins, admin)
+		admins.Admins = append(admins.Admins, admin)
 	}
 	return admins, nil
 }

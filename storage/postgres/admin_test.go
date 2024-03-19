@@ -44,7 +44,7 @@ func TestGetAdmins(t *testing.T) {
 
 	logger := logger.New(cfg.LogLevel)
 	pg := New(db, logger, cfg)
-	data, err := pg.GetAdmins(models.GetAdmins{
+	data, err := pg.GetAdmins(models.GetAdminsRequest{
 		Id:    "074e3a78-e507-11ee-8767-0242ac1a0003",
 		Limit: 1,
 		Page:  1,

@@ -54,7 +54,7 @@ func (h *handlerV1) CreateAdmin(c *gin.Context) {
 // @Param offset query string false "offset"
 // @Param first_name query string false "first_name"
 // @Param id query string false "id"
-// @Success 200 {object} []models.Admin
+// @Success 200 {object} []models.GetAdminsResponse 
 // @Failure default {object} models.StandardResponse
 func (h *handlerV1) GetAdmins(c *gin.Context) {
 
@@ -70,7 +70,7 @@ func (h *handlerV1) GetAdmins(c *gin.Context) {
 
 	limit, ok := c.GetQuery("limit")
 	if !ok {
-		limit = "1"
+		limit = "10"
 	}
 
 	page, ok := c.GetQuery("page")
@@ -90,7 +90,7 @@ func (h *handlerV1) GetAdmins(c *gin.Context) {
 		return
 	}
 
-	data, err := h.storage.Postgres().GetAdmins(models.GetAdmins{
+	data, err := h.storage.Postgres().GetAdmins(models.GetAdminsRequest{
 		Limit:     limitInt,
 		Page:      pageInt,
 		Id:        id,
@@ -129,7 +129,7 @@ func (h *handlerV1) GetInfo(c *gin.Context) {
 		})
 		return
 	}
-	data, err := h.storage.Postgres().GetAdmins(models.GetAdmins{
+	data, err := h.storage.Postgres().GetAdmins(models.GetAdminsRequest{
 		Id:    id,
 		Page:  0,
 		Limit: 1,

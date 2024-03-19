@@ -10,9 +10,13 @@ type Admin struct {
 	Type      string `json:"type"`
 	CreatedAt string `json:"created_at"`
 }
-type GetAdmins struct {
+type GetAdminsRequest struct {
 	Limit     int    `json:"limit"`
 	Page      int    `json:"page"`
 	Id        string `json:"id"`
 	Firstname string `json:"firstname"`
+}
+type GetAdminsResponse struct {
+	Count  int     `json:"count"`
+	Admins []Admin `json:"admins"`
 }

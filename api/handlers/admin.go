@@ -54,7 +54,7 @@ func (h *handlerV1) CreateAdmin(c *gin.Context) {
 // @Param offset query string false "offset"
 // @Param first_name query string false "first_name"
 // @Param id query string false "id"
-// @Success 200 {object} []models.GetAdminsResponse 
+// @Success 200 {object} []models.GetAdminsResponse
 // @Failure default {object} models.StandardResponse
 func (h *handlerV1) GetAdmins(c *gin.Context) {
 

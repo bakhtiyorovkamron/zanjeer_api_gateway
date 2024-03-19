@@ -73,7 +73,7 @@ func (h *handlerV1) GetAdmins(c *gin.Context) {
 		limit = "10"
 	}
 
-	page, ok := c.GetQuery("page")
+	page, ok := c.GetQuery("offset")
 	if !ok {
 		page = "1"
 	}

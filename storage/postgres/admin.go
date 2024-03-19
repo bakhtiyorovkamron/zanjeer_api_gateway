@@ -43,6 +43,8 @@ func (p *postgresRepo) GetAdmins(req models.GetAdminsRequest) (models.GetAdminsR
 	var (
 		admins models.GetAdminsResponse
 	)
+	fmt.Println("Limit: ", req.Limit)
+	fmt.Println("Offset: ", req.Page)
 	rows, err := p.Db.Db.Query(`select id,login,created_at,type,coalesce(first_name,''),coalesce(last_name,''),coalesce(phone,''),(
 		select count(*) from admins where  (first_name ilike '%' || $1 || '%' or $1='')
 		AND ($4='' OR id = $4)

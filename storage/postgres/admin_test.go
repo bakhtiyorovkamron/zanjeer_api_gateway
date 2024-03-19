@@ -45,12 +45,11 @@ func TestGetAdmins(t *testing.T) {
 	logger := logger.New(cfg.LogLevel)
 	pg := New(db, logger, cfg)
 	data, err := pg.GetAdmins(models.GetAdminsRequest{
-		Id:    "b7b92a2e-e02e-11ee-85a4-c8b29b7e512b",
 		Limit: 10,
-		Page:  1,
+		Page:  2,
 	})
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Data :", data)
+	fmt.Println("Data :", len(data.Admins))
 }

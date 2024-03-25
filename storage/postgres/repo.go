@@ -23,7 +23,7 @@ type PostgresI interface {
 
 	CreateDevice(req models.CreateDeviceRequest) (models.CreateDeviceResponse, error)
 
-	GetDeviceLocation(req models.GetDeviceLocationRequest) (map[string]models.GetDeviceLocationResponse, error)
+	GetDeviceLocation(req models.GetDeviceLocationRequest) ([]models.GetDeviceLocationResponse, error)
 
 	VerifyDriver(id string) (models.Driver, error)
 }

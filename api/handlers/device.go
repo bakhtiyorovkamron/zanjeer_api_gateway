@@ -146,7 +146,6 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 			return
 		}
 		SendTOClient(h, conn, string(p))
-		time.Sleep(time.Second)
 	}
 }
 

@@ -145,6 +145,7 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 			log.Println("err :", err)
 			// return
 		}
+		fmt.Println("Message received :", string(p))
 		SendTOClient(h, conn, string(p))
 	}
 }

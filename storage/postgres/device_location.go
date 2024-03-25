@@ -6,11 +6,9 @@ import (
 	"github.com/Projects/zanjeer_api_gateway/models"
 )
 
-func (p *postgresRepo) GetDeviceLocation(req models.GetDeviceLocationRequest) ([]models.GetDeviceLocationResponse, error) {
+func (p *postgresRepo) GetDeviceLocation(req models.GetDeviceLocationRequest) (map[string]models.GetDeviceLocationResponse, error) {
 
-	var (
-		resp []models.GetDeviceLocationResponse
-	)
+	resp := make(map[string]models.GetDeviceLocationResponse)
 
 	data, err := p.Db.Db.Query("SELECT imei,longitude,latitiude,created_at FROM devices_location order by created_at desc limit 1")
 	if err != nil {
@@ -53,12 +51,18 @@ func (p *postgresRepo) GetDeviceLocation(req models.GetDeviceLocationRequest) ([
 		} else {
 			latitudeSlice = []string{}
 		}
-		resp = append(resp, models.GetDeviceLocationResponse{
+		resp[imei] = models.GetDeviceLocationResponse{
 			Imei:      imei,
 			Time:      createdAt,
 			Longitude: longitudeSlice,
 			Latitude:  latitudeSlice,
-		})
+		}
+		// resp = append(resp, models.GetDeviceLocationResponse{
+		// 	Imei:      imei,
+		// 	Time:      createdAt,
+		// 	Longitude: longitudeSlice,
+		// 	Latitude:  latitudeSlice,
+		// })
 	}
 
 	return resp, nil

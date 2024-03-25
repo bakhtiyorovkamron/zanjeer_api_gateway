@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/Projects/zanjeer_api_gateway/models"
@@ -10,14 +11,14 @@ func (p *postgresRepo) GetDeviceLocation(req models.GetDeviceLocationRequest) (m
 
 	resp := make(map[string]models.GetDeviceLocationResponse)
 
-	data, err := p.Db.Db.Query("SELECT imei,longitude,latitiude,created_at FROM devices_location order by created_at desc limit 1")
+	data, err := p.Db.Db.Query("SELECT imei,longitude,latitiude,created_at FROM devices_location order by created_at  limit 1")
 	if err != nil {
 		return resp, err
 	}
 	for data.Next() {
 		var (
 			imei                          string
-			longitude, latitude           = []byte{}, []byte{}
+			longitude, latitude           []byte
 			longitudeSlice, latitudeSlice = []string{}, []string{}
 			createdAt                     string
 		)
@@ -51,11 +52,27 @@ func (p *postgresRepo) GetDeviceLocation(req models.GetDeviceLocationRequest) (m
 		} else {
 			latitudeSlice = []string{}
 		}
+		fmt.Println("latitudeSlice: ", latitudeSlice)
+		fmt.Println("longitudeSlice: ", longitudeSlice)
 		resp[imei] = models.GetDeviceLocationResponse{
-			Imei:      imei,
-			Time:      createdAt,
-			Longitude: longitudeSlice,
-			Latitude:  latitudeSlice,
+			Imei: imei,
+			Time: createdAt,
+			Longitude: func() string {
+				for i := range longitudeSlice {
+					if string(longitudeSlice[i]) != "0" {
+						return string(longitudeSlice[i])
+					}
+				}
+				return ""
+			}(),
+			Latitude: func() string {
+				for i := range latitudeSlice {
+					if string(latitudeSlice[i]) != "0" {
+						return string(latitudeSlice[i])
+					}
+				}
+				return ""
+			}(),
 		}
 		// resp = append(resp, models.GetDeviceLocationResponse{
 		// 	Imei:      imei,

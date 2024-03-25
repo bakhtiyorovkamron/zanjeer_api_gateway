@@ -8,8 +8,8 @@ type GetDeviceLocationResponse struct {
 	Time      string
 	Angle     int16
 	Speed     int16
-	Longitude []string
-	Latitude  []string
+	Longitude string
+	Latitude  string
 }
 type Location struct {
 	Type        string

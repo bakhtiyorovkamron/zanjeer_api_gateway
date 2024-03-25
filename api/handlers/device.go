@@ -143,7 +143,7 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 		_, p, err := conn.ReadMessage()
 		if err != nil {
 			log.Println("err :", err)
-			return
+			// return
 		}
 		SendTOClient(h, conn, string(p))
 	}

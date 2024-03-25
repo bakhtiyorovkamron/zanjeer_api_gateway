@@ -15,7 +15,6 @@ func (p *postgresRepo) Login(req models.Login) (models.LoginResponse, error) {
 		password string
 		resp models.LoginResponse
 	)
-
 	data, err := p.Db.Db.Query("select login,password,id,type,created_at from admins where login = $1", req.Login)
 	if err != nil {
 		return resp, err

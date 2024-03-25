@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -161,11 +160,12 @@ func SendTOClient(h *handlerV1, conn *websocket.Conn, msg string) {
 			h.mu.Lock()
 			defer h.mu.Unlock()
 			fmt.Println("sending data....")
-			d, err := json.MarshalIndent(data, "", " ")
-			if err != nil {
-				fmt.Println("error marshalling :", err)
-			}
-			conn.WriteMessage(websocket.TextMessage, d)
+			// d, err := json.MarshalIndent(data, "", " ")
+			// if err != nil {
+			// 	fmt.Println("error marshalling :", err)
+			// }
+			conn.WriteJSON(data)
+			// conn.WriteMessage(websocket.TextMessage, d)
 			fmt.Println("sent data!!!")
 		} else {
 			log.Println("Error :", err)

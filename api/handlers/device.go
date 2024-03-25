@@ -140,17 +140,18 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 	}
 	defer conn.Close()
 	for {
-		_, p, err := conn.ReadMessage()
-		if err != nil {
-			log.Println("err :", err)
-			// return
-		}
-		fmt.Println("Message received :", string(p))
-		SendTOClient(h, conn, string(p))
+		fmt.Println("Connected :", conn.RemoteAddr())
+		// _, p, err := conn.ReadMessage()
+		// if err != nil {
+		// 	log.Println("err :", err)
+		// 	// return
+		// }
+		// fmt.Println("Message received :", string(p))
+		SendTOClient(h, conn)
 	}
 }
 
-func SendTOClient(h *handlerV1, conn *websocket.Conn, msg string) {
+func SendTOClient(h *handlerV1, conn *websocket.Conn) {
 	// 3
 	s := gocron.NewScheduler(time.UTC)
 

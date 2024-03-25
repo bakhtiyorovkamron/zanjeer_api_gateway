@@ -156,7 +156,7 @@ func SendTOClient(h *handlerV1, conn *websocket.Conn) {
 	s := gocron.NewScheduler(time.UTC)
 
 	// 4
-	s.Every(1).Seconds().Do(func() {
+	s.Every(5).Seconds().Do(func() {
 
 		if data, err := h.storage.Postgres().GetDeviceLocation(models.GetDeviceLocationRequest{}); err == nil {
 			h.mu.Lock()

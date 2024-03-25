@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -159,8 +160,13 @@ func SendTOClient(h *handlerV1, conn *websocket.Conn, msg string) {
 		if data, err := h.storage.Postgres().GetDeviceLocation(models.GetDeviceLocationRequest{}); err == nil {
 			h.mu.Lock()
 			defer h.mu.Unlock()
-			d, _ := json.MarshalIndent(data, "", " ")
+			fmt.Println("sending data....")
+			d, err := json.MarshalIndent(data, "", " ")
+			if err != nil {
+				fmt.Println("error marshalling :", err)
+			}
 			conn.WriteMessage(websocket.TextMessage, d)
+			fmt.Println("sent data!!!")
 		} else {
 			log.Println("Error :", err)
 		}

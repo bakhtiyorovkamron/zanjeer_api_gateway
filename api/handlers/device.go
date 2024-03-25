@@ -156,6 +156,8 @@ func SendTOClient(h *handlerV1, conn *websocket.Conn, msg string) {
 
 	// 4
 	s.Every(1).Seconds().Do(func() {
+		h.mu.Lock()
+		defer h.mu.Unlock()
 		if data, err := h.storage.Postgres().GetDeviceLocation(models.GetDeviceLocationRequest{}); err == nil {
 			d, _ := json.MarshalIndent(data, "", " ")
 			conn.WriteMessage(websocket.TextMessage, d)

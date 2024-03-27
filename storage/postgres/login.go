@@ -13,20 +13,24 @@ func (p *postgresRepo) Login(req models.Login) (models.LoginResponse, error) {
 	var (
 		res,
 		password string
-		resp models.LoginResponse
+		resp   models.LoginResponse
+		status bool
 	)
-	data, err := p.Db.Db.Query("select login,password,id,type,created_at from admins where login = $1", req.Login)
+	data, err := p.Db.Db.Query("select login,password,id,type,created_at,status from admins where login = $1", req.Login)
 	if err != nil {
 		return resp, err
 	}
 	for data.Next() {
-		err = data.Scan(&res, &password, &resp.Admin.Id, &resp.Admin.Type, &resp.Admin.CreatedAt)
+		err = data.Scan(&res, &password, &resp.Admin.Id, &resp.Admin.Type, &resp.Admin.CreatedAt, &status)
 		if err != nil {
 			return resp, err
 		}
 	}
 	if res == "" {
 		return resp, errors.New("Invalid login")
+	}
+	if !status {
+		return resp, errors.New("Forbidden")
 	}
 
 	err = validator.VerifyPassword(req.Password, password)

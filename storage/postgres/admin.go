@@ -52,7 +52,8 @@ func (p *postgresRepo) GetAdmins(req models.GetAdminsRequest) (models.GetAdminsR
 	rows, err := p.Db.Db.Query(`select id,login,created_at,type,coalesce(first_name,''),coalesce(last_name,''),coalesce(phone,''),(
 		select count(*) from admins where  (first_name ilike '%' || $1 || '%' or $1='')
 		AND ($4='' OR id = $4)
-	) as count
+	) as count,
+	coalesce(status,false)
 	from admins 
 	where  (first_name ilike '%' || $1 || '%' or $1='')
 	AND (id=$4 OR $4='')
@@ -63,7 +64,7 @@ func (p *postgresRepo) GetAdmins(req models.GetAdminsRequest) (models.GetAdminsR
 	for rows.Next() {
 		var admin models.Admin
 
-		err = rows.Scan(&admin.Id, &admin.Login, &admin.CreatedAt, &admin.Type, &admin.Firstname, &admin.Lastname, &admin.Phone, &admins.Count)
+		err = rows.Scan(&admin.Id, &admin.Login, &admin.CreatedAt, &admin.Type, &admin.Firstname, &admin.Lastname, &admin.Phone, &admins.Count,&admin.Status)
 		if err != nil {
 			return admins, err
 		}

@@ -9,6 +9,7 @@ type Admin struct {
 	Password  string `json:"password"`
 	Type      string `json:"type"`
 	CreatedAt string `json:"created_at"`
+	Status    bool   `json:"status"`
 }
 type GetAdminsRequest struct {
 	Limit     int    `json:"limit"`

@@ -75,6 +75,13 @@ definitions:
       phone:
         type: string
     type: object
+  models.EditAdminsResponse:
+    properties:
+      id:
+        type: string
+      status:
+        type: boolean
+    type: object
   models.GetAdminsResponse:
     properties:
       admins:
@@ -141,6 +148,34 @@ paths:
       security:
       - BearerAuth: []
       summary: Add admin by superadmin
+      tags:
+      - Admin
+  /admin/edit/admin:
+    patch:
+      consumes:
+      - application/json
+      description: Here admins can be created.
+      parameters:
+      - description: admin
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/models.EditAdminsResponse'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Admin'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.StandardResponse'
+      security:
+      - BearerAuth: []
+      summary: Edit admin by superadmin
       tags:
       - Admin
   /admin/get/admins:

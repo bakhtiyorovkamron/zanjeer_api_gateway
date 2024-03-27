@@ -52,8 +52,8 @@ func (p *postgresRepo) GetDeviceLocation(req models.GetDeviceLocationRequest) ([
 		} else {
 			latitudeSlice = []string{}
 		}
-		fmt.Println("latitudeSlice: ", latitudeSlice)
-		fmt.Println("longitudeSlice: ", longitudeSlice)
+		fmt.Println("LOng :", longitudeSlice)
+		fmt.Println("latitude :", latitudeSlice)
 		resp = append(resp, models.GetDeviceLocationResponse{
 			Imei: imei,
 			Time: createdAt,

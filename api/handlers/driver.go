@@ -77,17 +77,30 @@ func (h *handlerV1) DeleteDriverInfo(c *gin.Context) {
 	driverId := c.Param("id")
 
 	if driverId == "" {
-		c.JSON(400, gin.H{
-			"error": "driver id is required",
+		h.handleResponse(c, models.StandardResponse{
+			Status:  "error",
+			Message: "id is required",
+			Data:    nil,
+			Code:    400,
 		})
 		return
 	}
 
 	if err := h.storage.Postgres().DeleteDriver(driverId); err != nil {
-		c.JSON(500, err.Error())
+		h.handleResponse(c, models.StandardResponse{
+			Status:  "error",
+			Message: err.Error(),
+			Data:    nil,
+			Code:    500,
+		})
+		return
 	}
-
-	c.JSON(200, gin.H{"status": "success"})
+	h.handleResponse(c, models.StandardResponse{
+		Status:  "success",
+		Message: "success",
+		Data:    nil,
+		Code:    200,
+	})
 }
 
 // @Router /user/get-list [GET]

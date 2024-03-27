@@ -149,3 +149,53 @@ func (h *handlerV1) GetInfo(c *gin.Context) {
 		"data":   data,
 	})
 }
+
+// @Router		/admin/edit/admin [PATCH]
+// @Summary		Edit admin by superadmin
+// @Tags        Admin
+// @Description	Here admins can be created.
+// @Accept      json
+// @Produce		json
+// @Security    BearerAuth
+// @Param       post   body       models.EditAdminsResponse true "admin"
+// @Success		200 	{object}  models.Admin
+// @Failure     default {object}  models.StandardResponse
+func (h *handlerV1) EditAdmin(c *gin.Context) {
+	var resp models.EditAdminsResponse
+
+	if err := c.ShouldBindJSON(&resp); err != nil {
+		h.handleResponse(c, models.StandardResponse{
+			Status:  "error",
+			Message: err.Error(),
+			Data:    nil,
+			Code:    400,
+		})
+		return
+	}
+	if resp.Id == "" {
+		h.handleResponse(c, models.StandardResponse{
+			Status:  "error",
+			Message: "Bad request",
+			Data:    nil,
+			Code:    400,
+		})
+		return
+	}
+
+	err := h.storage.Postgres().EditStatus(resp)
+	if err != nil {
+		h.handleResponse(c, models.StandardResponse{
+			Status:  "error",
+			Message: err.Error(),
+			Data:    nil,
+			Code:    500,
+		})
+		return
+	}
+	h.handleResponse(c, models.StandardResponse{
+		Status:  "success",
+		Message: "success",
+		Data:    nil,
+		Code:    200,
+	})
+}

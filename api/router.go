@@ -44,6 +44,7 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 	admin.GET("/get/info", h.GetInfo)
 	// admin.Use(h.SuperAdminCheckType())
 	admin.POST("/add/admin", h.CreateAdmin)
+	admin.PATCH("/edit/admin", h.EditAdmin)
 
 	user := r.Group("/user")
 	user.POST("/register", h.UserRegister)

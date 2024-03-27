@@ -53,3 +53,21 @@ func TestGetAdmins(t *testing.T) {
 	}
 	fmt.Println("Data :", len(data.Admins))
 }
+func TestEditAdmins(t *testing.T) {
+	db, err := db.New(cfg)
+	if err != nil {
+		fmt.Println("Failed to create")
+	} else {
+		fmt.Println("err :", err)
+	}
+	cfg := config.Load()
+
+	logger := logger.New(cfg.LogLevel)
+	pg := New(db, logger, cfg)
+	if err := pg.EditStatus(models.EditAdminsResponse{
+		Id:     "acdd6fd8-e02e-11ee-a678-c8b29b7e512b",
+		Status: true,
+	}); err != nil {
+		panic(err)
+	}
+}

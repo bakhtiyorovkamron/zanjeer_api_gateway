@@ -39,12 +39,16 @@ func (p *postgresRepo) CreateAdmin(req models.Admin) (models.Admin, error) {
 
 	return admin, nil
 }
+
+func (p *postgresRepo) EditStatus(req models.EditAdminsResponse) error {
+	return p.Db.Db.QueryRow("update admins set status=$2  where id=$1 returning status", req.Id, req.Status).Scan(&req.Status)
+}
+
 func (p *postgresRepo) GetAdmins(req models.GetAdminsRequest) (models.GetAdminsResponse, error) {
 	var (
 		admins models.GetAdminsResponse
 	)
-	fmt.Println("Limit: ", req.Limit)
-	fmt.Println("Offset: ", req.Page)
+
 	rows, err := p.Db.Db.Query(`select id,login,created_at,type,coalesce(first_name,''),coalesce(last_name,''),coalesce(phone,''),(
 		select count(*) from admins where  (first_name ilike '%' || $1 || '%' or $1='')
 		AND ($4='' OR id = $4)

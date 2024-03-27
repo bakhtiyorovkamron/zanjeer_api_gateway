@@ -20,3 +20,7 @@ type GetAdminsResponse struct {
 	Count  int     `json:"count"`
 	Admins []Admin `json:"admins"`
 }
+type EditAdminsResponse struct {
+	Id     string `json:"id"`
+	Status bool   `json:"status"`
+}

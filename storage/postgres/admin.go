@@ -57,6 +57,7 @@ func (p *postgresRepo) GetAdmins(req models.GetAdminsRequest) (models.GetAdminsR
 	from admins 
 	where  (first_name ilike '%' || $1 || '%' or $1='')
 	AND (id=$4 OR $4='')
+	order by created_at desc
 	limit $2 offset $3`, req.Firstname, req.Limit, req.Limit*(req.Page-1), req.Id)
 	if err != nil {
 		return admins, err

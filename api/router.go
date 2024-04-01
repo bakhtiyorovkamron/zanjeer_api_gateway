@@ -32,6 +32,8 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 	r.Use(cors.New(corsConfig))
 	r.GET("/ws", h.GetLocation)
 
+	r.POST("/zanjeer/devices",)
+
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",

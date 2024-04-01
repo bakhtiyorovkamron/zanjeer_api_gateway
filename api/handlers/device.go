@@ -8,6 +8,7 @@ import (
 
 	"github.com/go-co-op/gocron"
 
+	"github.com/Projects/zanjeer_api_gateway/integration/flespi"
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
@@ -156,22 +157,27 @@ func SendTOClient(h *handlerV1, conn *websocket.Conn) {
 	s := gocron.NewScheduler(time.UTC)
 
 	// 4
-	s.Every(5).Seconds().Do(func() {
+	s.Every(3).Seconds().Do(func() {
 
-		if data, err := h.storage.Postgres().GetDeviceLocation(models.GetDeviceLocationRequest{}); err == nil {
-			h.mu.Lock()
-			defer h.mu.Unlock()
-			fmt.Println("sending data....")
-			// d, err := json.MarshalIndent(data, "", " ")
-			// if err != nil {
-			// 	fmt.Println("error marshalling :", err)
-			// }
-			conn.WriteJSON(data)
-			// conn.WriteMessage(websocket.TextMessage, d)
-			fmt.Println("sent data!!!")
-		} else {
-			log.Println("Error :", err)
+		data, err := flespi.GetTelementary()
+		if err != nil {
+			return
 		}
+
+		// if data, err := h.storage.Postgres().GetDeviceLocation(models.GetDeviceLocationRequest{}); err == nil {
+		// 	h.mu.Lock()
+		// 	defer h.mu.Unlock()
+		// 	fmt.Println("sending data....")
+		// 	// d, err := json.MarshalIndent(data, "", " ")
+		// 	// if err != nil {
+		// 	// 	fmt.Println("error marshalling :", err)
+		// 	// }
+		conn.WriteJSON(data)
+		// 	// conn.WriteMessage(websocket.TextMessage, d)
+		// 	fmt.Println("sent data!!!")
+		// } else {
+		// 	log.Println("Error :", err)
+		// }
 
 	})
 

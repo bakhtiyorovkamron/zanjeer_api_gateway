@@ -8,7 +8,6 @@ import (
 	"github.com/Projects/zanjeer_api_gateway/pkg/db"
 	"github.com/Projects/zanjeer_api_gateway/pkg/logger"
 	"github.com/Projects/zanjeer_api_gateway/storage"
-	"golang.org/x/crypto/bcrypt"
 )
 
 func TestCreateAdmin(t *testing.T) {
@@ -33,11 +32,11 @@ func TestCreateAdmin(t *testing.T) {
 		Postgres: storage.New(db, logger, cfg),
 	})
 
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(resp.Password), bcrypt.DefaultCost)
-	if err != nil {
-		panic("Error generating password")
-	}
-	resp.Password = string(hashedPassword)
+	// hashedPassword, err := bcrypt.GenerateFromPassword([]byte(resp.Password), bcrypt.DefaultCost)
+	// if err != nil {
+	// 	panic("Error generating password")
+	// }
+	// resp.Password = string(hashedPassword)
 
 	_, err = h.storage.Postgres().CreateAdmin(resp)
 	if err != nil {

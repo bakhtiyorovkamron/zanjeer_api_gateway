@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"errors"
+	"fmt"
 
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/Projects/zanjeer_api_gateway/pkg/validator"
@@ -16,6 +17,7 @@ func (p *postgresRepo) Login(req models.Login) (models.LoginResponse, error) {
 		resp   models.LoginResponse
 		status bool
 	)
+	fmt.Println("req", req)
 	data, err := p.Db.Db.Query("select login,password,id,type,created_at,status from admins where login = $1", req.Login)
 	if err != nil {
 		return resp, err
@@ -35,6 +37,7 @@ func (p *postgresRepo) Login(req models.Login) (models.LoginResponse, error) {
 
 	err = validator.VerifyPassword(req.Password, password)
 	if err != nil && err == bcrypt.ErrMismatchedHashAndPassword {
+		fmt.Println("err :", err)
 		return resp, errors.New("Invalid login or password mismatch")
 	}
 	token, err := validator.GenerateToken(resp.Admin.Id, resp.Admin.Type)

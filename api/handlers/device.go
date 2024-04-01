@@ -157,7 +157,7 @@ func SendTOClient(h *handlerV1, conn *websocket.Conn) {
 	s := gocron.NewScheduler(time.UTC)
 
 	// 4
-	s.Every(3).Seconds().Do(func() {
+	s.Every(10).Seconds().Do(func() {
 
 		data, err := flespi.GetTelementary()
 		if err != nil {

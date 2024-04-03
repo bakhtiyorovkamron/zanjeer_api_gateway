@@ -19,7 +19,7 @@ type GetDevicesInfo struct {
 }
 
 type ResponseToClient struct {
-	Data WebHookResponse `json:"data"`
+	Data WebHookResponseToClient `json:"data"`
 }
 
 type WebHookResponse struct {
@@ -60,4 +60,35 @@ type WebHookResponse struct {
 	Timestamp                  int     `json:"timestamp"`
 	TripStateEnum              int     `json:"trip.state.enum"`
 	TripStatus                 bool    `json:"trip.status"`
+}
+type WebHookResponseToClient struct {
+	ChannelID                  int     `json:"channelId"`
+	CodecID                    int     `json:"codecId"`
+	DeviceID                   int     `json:"deviceId"`
+	DeviceName                 string  `json:"deviceName"`
+	DeviceTypeID               int     `json:"deviceTypeId"`
+	Din                        int     `json:"din"`
+	Din1                       bool    `json:"din1"`
+	EngineIgnitionStatus       bool    `json:"engineIgnitionStatus"`
+	EventPriorityEnum          int     `json:"eventPriorityEnum"`
+	ExternalPowersourceVoltage float64 `json:"externalPowersourceVoltage"`
+	GnssStateEnum              int     `json:"gnssStateEnum"`
+	GnssStatus                 bool    `json:"gnssStatus"`
+	GsmCellid                  int     `json:"gsmCellid"`
+	GsmLac                     int     `json:"gsmLac"`
+	GsmMcc                     int     `json:"gsmMcc"`
+	GsmMnc                     int     `json:"gsmMnc"`
+	GsmNetworkModeEnum         int     `json:"gsmNetworkModeEnum"`
+	GsmNetworkRoamingStatus    bool    `json:"gsmNetworkRoamingStatus"`
+	PositionAltitude           int     `json:"positionAltitude"`
+	PositionDirection          int     `json:"positionDirection"`
+	PositionHdop               float64 `json:"positionHdop"`
+	PositionLatitude           float64 `json:"positionLatitude"`
+	PositionLongitude          float64 `json:"positionLongitude"`
+	PositionSatellites         int     `json:"positionSatellites"`
+	PositionSpeed              int     `json:"positionSpeed"`
+	PositionValid              bool    `json:"positionValid"`
+	ProtocolID                 int     `json:"protocolId"`
+	SegmentVehicleMileage      float64 `json:"segmentVehicleMileage"`
+	Timestamp                  int     `json:"timestamp"`
 }

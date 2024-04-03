@@ -1,14 +1,12 @@
 package handlers
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"time"
 
 	"github.com/go-co-op/gocron"
 
-	"github.com/Projects/zanjeer_api_gateway/integration/flespi"
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
@@ -141,14 +139,12 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 	}
 	defer conn.Close()
 	for {
-		fmt.Println("Connected :", conn.RemoteAddr())
-		// _, p, err := conn.ReadMessage()
-		// if err != nil {
-		// 	log.Println("err :", err)
-		// 	// return
-		// }
-		// fmt.Println("Message received :", string(p))
-		SendTOClient(h, conn)
+
+		if data != nil && data.IsNew {
+			conn.WriteJSON(data)
+			data.IsNew = false
+		}
+
 	}
 }
 
@@ -158,26 +154,6 @@ func SendTOClient(h *handlerV1, conn *websocket.Conn) {
 
 	// 4
 	s.Every(4).Seconds().Do(func() {
-
-		data, err := flespi.GetTelementary()
-		if err != nil {
-			return
-		}
-
-		// if data, err := h.storage.Postgres().GetDeviceLocation(models.GetDeviceLocationRequest{}); err == nil {
-		// 	h.mu.Lock()
-		// 	defer h.mu.Unlock()
-		// 	fmt.Println("sending data....")
-		// 	// d, err := json.MarshalIndent(data, "", " ")
-		// 	// if err != nil {
-		// 	// 	fmt.Println("error marshalling :", err)
-		// 	// }
-		conn.WriteJSON(data)
-		// 	// conn.WriteMessage(websocket.TextMessage, d)
-		// 	fmt.Println("sent data!!!")
-		// } else {
-		// 	log.Println("Error :", err)
-		// }
 
 	})
 

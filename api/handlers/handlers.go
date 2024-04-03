@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"strconv"
-	"sync"
 
 	"github.com/Projects/zanjeer_api_gateway/config"
 	"github.com/Projects/zanjeer_api_gateway/models"
@@ -15,8 +14,13 @@ type handlerV1 struct {
 	log     *logger.Logger
 	cfg     config.Config
 	storage storage.StorageI
-	mu      sync.Mutex
 }
+type DataFromFlespiWebhook struct {
+	IsNew bool
+	Data  interface{}
+}
+
+var data *DataFromFlespiWebhook
 
 // NewHandlerV1 is a constructor for handlerV1
 type HandlerV1Config struct {

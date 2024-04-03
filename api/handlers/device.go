@@ -3,9 +3,6 @@ package handlers
 import (
 	"log"
 	"net/http"
-	"time"
-
-	"github.com/go-co-op/gocron"
 
 	"github.com/Projects/zanjeer_api_gateway/models"
 	"github.com/Projects/zanjeer_api_gateway/models/flespi"
@@ -148,20 +145,19 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 
 		response.Data = resp
 
-		conn.WriteJSON(response)
-
+		conn.WriteJSON(struct {
+			Data struct {
+				Latitude  float64 `json:"latitude"`
+				Longitude float64 `json:"longitude"`
+			} `json:"data"`
+		}{
+			Data: struct {
+				Latitude  float64 `json:"latitude"`
+				Longitude float64 `json:"longitude"`
+			}{
+				Latitude:  response.Data.PositionLatitude,
+				Longitude: response.Data.PositionLongitude,
+			},
+		})
 	}
-}
-
-func SendTOClient(h *handlerV1, conn *websocket.Conn) {
-	// 3
-	s := gocron.NewScheduler(time.UTC)
-
-	// 4
-	s.Every(4).Seconds().Do(func() {
-
-	})
-
-	// 5
-	s.StartBlocking()
 }

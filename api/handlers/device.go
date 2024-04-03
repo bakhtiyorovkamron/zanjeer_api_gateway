@@ -1,11 +1,11 @@
 package handlers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/Projects/zanjeer_api_gateway/models"
-	"github.com/Projects/zanjeer_api_gateway/models/flespi"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 )
@@ -131,8 +131,6 @@ func (h *handlerV1) CreateDevice(c *gin.Context) {
 // @Failure default {object} models.StandardResponse
 func (h *handlerV1) GetLocation(c *gin.Context) {
 
-	var response flespi.ResponseToClient
-
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
 		log.Println("err :", err)
@@ -142,9 +140,7 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 	for {
 
 		resp := <-tunnel
-
-		response.Data = resp
-
+		fmt.Println("resp", resp)
 		conn.WriteJSON(struct {
 			Data struct {
 				Latitude  float64 `json:"latitude"`

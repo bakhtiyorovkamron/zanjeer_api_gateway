@@ -142,7 +142,9 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 
 		resp := <-tunnel
 
-		conn.WriteJSON(resp)
+		conn.WriteJSON(struct {
+			Data map[string]interface{} `json:"data"`
+		}{Data: resp})
 
 	}
 }

@@ -134,7 +134,7 @@ func (h *handlerV1) CreateDevice(c *gin.Context) {
 // @Failure default {object} models.StandardResponse
 func (h *handlerV1) GetLocation(c *gin.Context) {
 
-	response := make(map[string]flespi.WebHookResponse)
+	var response flespi.ResponseToClient
 
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
@@ -146,7 +146,7 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 
 		resp := <-tunnel
 
-		response["data"] = resp
+		response.Data = resp
 
 		conn.WriteJSON(response)
 

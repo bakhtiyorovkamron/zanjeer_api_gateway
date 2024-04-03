@@ -140,10 +140,9 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 	defer conn.Close()
 	for {
 
-		if data != nil && data.IsNew {
-			conn.WriteJSON(data.Data)
-			data.IsNew = false
-		}
+		resp := <-tunnel
+
+		conn.WriteJSON(resp)
 
 	}
 }

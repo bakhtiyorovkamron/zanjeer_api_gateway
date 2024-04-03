@@ -11,8 +11,6 @@ func (h *handlerV1) WebhookHandler(c *gin.Context) {
 		c.JSON(400, gin.H{"error": "Invalid request"})
 		return
 	}
-	data = &DataFromFlespiWebhook{}
-	data.IsNew = true
-	data.Data = req
+	tunnel <- req
 	c.JSON(200, gin.H{"status": "success"})
 }

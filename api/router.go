@@ -13,6 +13,7 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+
 func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engine {
 	r := gin.Default()
 
@@ -32,7 +33,7 @@ func New(cfg config.Config, strg storage.StorageI, log *logger.Logger) *gin.Engi
 	r.Use(cors.New(corsConfig))
 	r.GET("/ws", h.GetLocation)
 
-	r.POST("/zanjeer/devices",h.WebhookHandler)
+	r.POST("/zanjeer/devices", h.WebhookHandler)
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{

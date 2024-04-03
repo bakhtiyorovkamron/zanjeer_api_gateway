@@ -20,6 +20,8 @@ type DataFromFlespiWebhook struct {
 	Data  map[string]interface{}
 }
 
+var tunnel = make(chan map[string]interface{})
+
 var data *DataFromFlespiWebhook
 
 // NewHandlerV1 is a constructor for handlerV1

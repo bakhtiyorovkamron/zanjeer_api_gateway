@@ -5,6 +5,7 @@ import (
 
 	"github.com/Projects/zanjeer_api_gateway/config"
 	"github.com/Projects/zanjeer_api_gateway/models"
+	"github.com/Projects/zanjeer_api_gateway/models/flespi"
 	"github.com/Projects/zanjeer_api_gateway/pkg/logger"
 	"github.com/Projects/zanjeer_api_gateway/storage"
 	"github.com/gin-gonic/gin"
@@ -20,7 +21,7 @@ type DataFromFlespiWebhook struct {
 	Data  map[string]interface{}
 }
 
-var tunnel = make(chan map[string]interface{})
+var tunnel = make(chan flespi.WebHookResponse)
 
 var data *DataFromFlespiWebhook
 

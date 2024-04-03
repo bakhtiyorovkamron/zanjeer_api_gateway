@@ -8,6 +8,7 @@ import (
 	"github.com/go-co-op/gocron"
 
 	"github.com/Projects/zanjeer_api_gateway/models"
+	"github.com/Projects/zanjeer_api_gateway/models/flespi"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 )
@@ -143,7 +144,7 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 		resp := <-tunnel
 
 		conn.WriteJSON(struct {
-			Data map[string]interface{} `json:"data"`
+			Data flespi.WebHookResponse `json:"data"`
 		}{Data: resp})
 
 	}

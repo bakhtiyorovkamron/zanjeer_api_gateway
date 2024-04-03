@@ -155,8 +155,8 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 				Latitude  float64 `json:"latitude"`
 				Longitude float64 `json:"longitude"`
 			}{
-				Latitude:  response.Data.PositionLatitude,
-				Longitude: response.Data.PositionLongitude,
+				Latitude:  resp.PositionLatitude,
+				Longitude: resp.PositionLongitude,
 			},
 		})
 	}

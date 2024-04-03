@@ -141,7 +141,7 @@ func (h *handlerV1) GetLocation(c *gin.Context) {
 	for {
 
 		if data != nil && data.IsNew {
-			conn.WriteJSON(data)
+			conn.WriteJSON(data.Data)
 			data.IsNew = false
 		}
 

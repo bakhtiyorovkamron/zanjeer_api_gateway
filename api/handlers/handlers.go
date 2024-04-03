@@ -17,7 +17,7 @@ type handlerV1 struct {
 }
 type DataFromFlespiWebhook struct {
 	IsNew bool
-	Data  interface{}
+	Data  map[string]interface{}
 }
 
 var data *DataFromFlespiWebhook

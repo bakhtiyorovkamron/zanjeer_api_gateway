@@ -1,12 +1,11 @@
 package handlers
 
 import (
-	"github.com/Projects/zanjeer_api_gateway/models/flespi"
 	"github.com/gin-gonic/gin"
 )
 
 func (h *handlerV1) WebhookHandler(c *gin.Context) {
-	var req flespi.WebHookResponse
+	req := make(map[string]interface{})
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(400, gin.H{"error": "Invalid request"})
@@ -14,6 +13,6 @@ func (h *handlerV1) WebhookHandler(c *gin.Context) {
 	}
 	data = &DataFromFlespiWebhook{}
 	data.IsNew = true
-	data.Data = data
+	data.Data = req
 	c.JSON(200, gin.H{"status": "success"})
 }
